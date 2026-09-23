@@ -1,9 +1,13 @@
-Qwen Image Edit 2511 — Vast.ai one-command install
-
-Run this inside Jupyter Terminal on a fresh Vast.ai ComfyUI instance:
+ONE-COMMAND INSTALL
 
 curl -fsSL https://raw.githubusercontent.com/ImanNasrEsfahani/qwen-vast-recovery/main/bootstrap.sh | bash
 
-Verification command:
+WORKFLOWS INSTALLED
+- qwen2511-simple.json
+- qwen2511-custom-lora.json
+- qwen2511-multi-image-lora.json
 
-curl -fsSL https://raw.githubusercontent.com/ImanNasrEsfahani/qwen-vast-recovery/main/verify-install.sh | bash
+CUSTOM LORA
+After bootstrap:
+cd /workspace/ComfyUI
+./install-lora.sh 'DIRECT_HUGGINGFACE_RESOLVE_URL_TO_LORA.safetensors'

@@ -1,6 +1,6 @@
 {
-  "last_node_id": 17,
-  "last_link_id": 16,
+  "last_node_id": 19,
+  "last_link_id": 24,
   "nodes": [
     {
       "id": 17,
@@ -21,7 +21,7 @@
       "title": "Qwen Image Edit 2511 — Recovery Workflow",
       "properties": {},
       "widgets_values": [
-        "Qwen Image Edit 2511 — Simple\n\nSingle-image editing with the bundled 4-step Lightning acceleration LoRA.\nUpload one image, edit the Positive Prompt, then Queue/Run."
+        "Qwen Image Edit 2511 — Multi-Image + Custom LoRA\n\nUse Image 1 as the main image and Image 2 as an optional visual/reference image.\nBoth positive and negative Qwen edit encoders receive the two images.\n\nThe Custom LoRA node starts in BYPASS mode. Put compatible custom LoRAs in ComfyUI/models/loras, refresh, select one, set strength, then change the Custom LoRA node from Bypass to Always."
       ]
     },
     {
@@ -67,7 +67,7 @@
       "type": "UNETLoader",
       "pos": [
         -980,
-        220
+        500
       ],
       "size": [
         400,
@@ -107,7 +107,7 @@
       "type": "CLIPLoader",
       "pos": [
         -980,
-        390
+        670
       ],
       "size": [
         400,
@@ -149,7 +149,7 @@
       "type": "VAELoader",
       "pos": [
         -980,
-        580
+        860
       ],
       "size": [
         400,
@@ -260,7 +260,7 @@
           "name": "image2",
           "type": "IMAGE",
           "shape": 7,
-          "link": null
+          "link": 23
         },
         {
           "name": "image3",
@@ -323,7 +323,7 @@
           "name": "image2",
           "type": "IMAGE",
           "shape": 7,
-          "link": null
+          "link": 24
         },
         {
           "name": "image3",
@@ -596,7 +596,7 @@
       "id": 14,
       "type": "KSampler",
       "pos": [
-        720,
+        1190,
         120
       ],
       "size": [
@@ -604,13 +604,13 @@
         360
       ],
       "flags": {},
-      "order": 14,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 19
+          "link": 22
         },
         {
           "name": "positive",
@@ -655,7 +655,7 @@
       "id": 15,
       "type": "VAEDecode",
       "pos": [
-        1120,
+        1570,
         170
       ],
       "size": [
@@ -696,7 +696,7 @@
       "id": 16,
       "type": "SaveImage",
       "pos": [
-        1450,
+        1900,
         100
       ],
       "size": [
@@ -726,6 +726,86 @@
       },
       "widgets_values": [
         "Qwen_Edit_2511"
+      ]
+    },
+    {
+      "id": 18,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        680,
+        650
+      ],
+      "size": [
+        430,
+        150
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 19
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            22
+          ]
+        }
+      ],
+      "title": "Custom LoRA — BYPASSED by default",
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "",
+        0.8
+      ]
+    },
+    {
+      "id": 19,
+      "type": "LoadImage",
+      "pos": [
+        -980,
+        120
+      ],
+      "size": [
+        320,
+        360
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            23,
+            24
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "Load Image 2 — Optional Reference",
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "",
+        "image"
       ]
     }
   ],
@@ -878,7 +958,7 @@
       19,
       13,
       0,
-      14,
+      18,
       0,
       "MODEL"
     ],
@@ -896,6 +976,30 @@
       0,
       16,
       0,
+      "IMAGE"
+    ],
+    [
+      22,
+      18,
+      0,
+      14,
+      0,
+      "MODEL"
+    ],
+    [
+      23,
+      19,
+      0,
+      6,
+      3,
+      "IMAGE"
+    ],
+    [
+      24,
+      19,
+      0,
+      7,
+      3,
       "IMAGE"
     ]
   ],

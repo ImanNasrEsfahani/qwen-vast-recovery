@@ -1,75 +1,28 @@
-Qwen Image Edit 2511 — Required files
-==========================================
+Qwen Image Edit 2511 — Core files
+==================================
 
-Diffusion model
----------------
-File:
-qwen_image_edit_2511_fp8mixed.safetensors
+Core model files installed by bootstrap.sh:
 
-Repository:
-Comfy-Org/Qwen-Image-Edit_ComfyUI
+1) qwen_image_edit_2511_fp8mixed.safetensors
+   -> ComfyUI/models/diffusion_models/
 
-Hugging Face path:
-split_files/diffusion_models/qwen_image_edit_2511_fp8mixed.safetensors
+2) qwen_2.5_vl_7b_fp8_scaled.safetensors
+   -> ComfyUI/models/text_encoders/
 
-Destination:
-ComfyUI/models/diffusion_models/
+3) qwen_image_vae.safetensors
+   -> ComfyUI/models/vae/
 
+4) Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors
+   -> ComfyUI/models/loras/
 
-Text encoder
+Custom LoRAs
 ------------
-File:
-qwen_2.5_vl_7b_fp8_scaled.safetensors
+Additional user LoRAs also go in:
 
-Repository:
-Comfy-Org/HunyuanVideo_1.5_repackaged
-
-Hugging Face path:
-split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors
-
-Destination:
-ComfyUI/models/text_encoders/
-
-
-VAE
----
-File:
-qwen_image_vae.safetensors
-
-Repository:
-Comfy-Org/Qwen-Image_ComfyUI
-
-Hugging Face path:
-split_files/vae/qwen_image_vae.safetensors
-
-Destination:
-ComfyUI/models/vae/
-
-
-4-step acceleration LoRA
-------------------------
-File:
-Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors
-
-Repository:
-lightx2v/Qwen-Image-Edit-2511-Lightning
-
-Destination:
 ComfyUI/models/loras/
 
+Use install-lora.sh to download one directly on the Vast.ai instance.
 
-Workflow
---------
-File:
-qwen2511-workflow.json
-
-Destination:
-ComfyUI/user/default/workflows/
-
-Notes
------
-The workflow is configured for the 4-step Lightning LoRA:
-Steps = 4
-CFG = 1.0
-Sampler = euler
-Scheduler = simple
+Important:
+A LoRA must be compatible with Qwen-Image / Qwen-Image-Edit-2511. A LoRA made for SDXL,
+Flux, Wan, or another base model is not automatically compatible.
