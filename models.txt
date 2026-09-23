@@ -1,0 +1,36 @@
+Qwen Image Edit 2511 - Required Models
+
+1. Diffusion Model
+qwen_image_edit_2511_fp8mixed.safetensors
+Repository:
+Comfy-Org/Qwen-Image-Edit_ComfyUI
+
+Destination:
+ComfyUI/models/diffusion_models/
+
+
+2. Text Encoder
+qwen_2.5_vl_7b_fp8_scaled.safetensors
+Repository:
+Comfy-Org/HunyuanVideo_1.5_repackaged
+
+Destination:
+ComfyUI/models/text_encoders/
+
+
+3. VAE
+qwen_image_vae.safetensors
+Repository:
+Comfy-Org/Qwen-Image_ComfyUI
+
+Destination:
+ComfyUI/models/vae/
+
+
+4. Lightning LoRA
+Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors
+Repository:
+lightx2v/Qwen-Image-Edit-2511-Lightning
+
+Destination:
+ComfyUI/models/loras/

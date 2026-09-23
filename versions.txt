@@ -1,0 +1,16 @@
+Recovery pack created:
+2026-09-22T07:06:07+00:00
+
+=== Python ===
+Python 3.12.14
+
+=== GPU ===
+NVIDIA GeForce RTX 5090, 580.82.07, 32607 MiB
+
+=== ComfyUI ===
+73c9bad4d21e7addbe1d13bc92eee0f1431b017d
+
+=== PyTorch ===
+PyTorch: 2.10.0+cu130
+CUDA: 13.0
+CUDA available: True
