@@ -1,35 +1,38 @@
 {
-  "last_node_id": 19,
-  "last_link_id": 24,
+  "last_node_id": 101,
+  "last_link_id": 31,
   "nodes": [
     {
-      "id": 17,
+      "id": 100,
       "type": "MarkdownNote",
       "pos": [
-        -980,
-        -540
+        -1050,
+        -620
       ],
       "size": [
-        620,
-        250
+        700,
+        300
       ],
       "flags": {},
       "order": 0,
       "mode": 0,
       "inputs": [],
       "outputs": [],
-      "title": "Qwen Image Edit 2511 — Recovery Workflow",
-      "properties": {},
+      "properties": {
+        "Node name for S&R": "MarkdownNote",
+        "cnr_id": "comfy-core"
+      },
       "widgets_values": [
-        "Qwen Image Edit 2511 — Multi-Image + Custom LoRA\n\nUse Image 1 as the main image and Image 2 as an optional visual/reference image.\nBoth positive and negative Qwen edit encoders receive the two images.\n\nThe Custom LoRA node starts in BYPASS mode. Put compatible custom LoRAs in ComfyUI/models/loras, refresh, select one, set strength, then change the Custom LoRA node from Bypass to Always."
-      ]
+        "Qwen Image Edit 2511 — Multi-Image + Optional LoRA Stack\n\nRequired: Lightning 4-step is always enabled.\nOptional LoRAs are installed as separate chained nodes and start in BYPASS mode.\nEnable only the LoRA(s) you need and tune each strength independently.\n\nOptional chain: Ultra Portrait → Hyper Portrait → Anything2Real → SexGod → MCNL-NSFW-v1 → Custom."
+      ],
+      "title": "Qwen 2511 — Multi-Image + Optional LoRA Stack"
     },
     {
       "id": 1,
       "type": "LoadImage",
       "pos": [
-        -980,
-        -220
+        -1050,
+        -250
       ],
       "size": [
         320,
@@ -60,21 +63,62 @@
       "widgets_values": [
         "",
         "image"
-      ]
+      ],
+      "title": "Load Image 1 — Main Image"
+    },
+    {
+      "id": 19,
+      "type": "LoadImage",
+      "pos": [
+        -1050,
+        150
+      ],
+      "size": [
+        320,
+        360
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            12,
+            13
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "Load Image 2 — Reference"
     },
     {
       "id": 2,
       "type": "UNETLoader",
       "pos": [
-        -980,
-        500
+        -1050,
+        560
       ],
       "size": [
-        400,
+        420,
         130
       ],
       "flags": {},
-      "order": 2,
+      "order": 3,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -92,7 +136,6 @@
         "models": [
           {
             "name": "qwen_image_edit_2511_fp8mixed.safetensors",
-            "url": "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_2511_fp8mixed.safetensors",
             "directory": "diffusion_models"
           }
         ]
@@ -106,15 +149,15 @@
       "id": 3,
       "type": "CLIPLoader",
       "pos": [
-        -980,
-        670
+        -1050,
+        730
       ],
       "size": [
-        400,
+        420,
         150
       ],
       "flags": {},
-      "order": 3,
+      "order": 4,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -133,7 +176,6 @@
         "models": [
           {
             "name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
-            "url": "https://huggingface.co/Comfy-Org/HunyuanVideo_1.5_repackaged/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors",
             "directory": "text_encoders"
           }
         ]
@@ -148,15 +190,15 @@
       "id": 4,
       "type": "VAELoader",
       "pos": [
-        -980,
-        860
+        -1050,
+        920
       ],
       "size": [
-        400,
+        420,
         100
       ],
       "flags": {},
-      "order": 4,
+      "order": 5,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -177,7 +219,6 @@
         "models": [
           {
             "name": "qwen_image_vae.safetensors",
-            "url": "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors",
             "directory": "vae"
           }
         ]
@@ -190,15 +231,15 @@
       "id": 5,
       "type": "FluxKontextImageScale",
       "pos": [
-        -500,
-        -160
+        -570,
+        -180
       ],
       "size": [
         250,
         90
       ],
       "flags": {},
-      "order": 5,
+      "order": 6,
       "mode": 0,
       "inputs": [
         {
@@ -228,15 +269,15 @@
       "id": 6,
       "type": "TextEncodeQwenImageEditPlus",
       "pos": [
-        -500,
-        0
+        -570,
+        -20
       ],
       "size": [
-        480,
+        500,
         250
       ],
       "flags": {},
-      "order": 6,
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
@@ -260,7 +301,7 @@
           "name": "image2",
           "type": "IMAGE",
           "shape": 7,
-          "link": 23
+          "link": 12
         },
         {
           "name": "image3",
@@ -274,32 +315,32 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            12
+            14
           ]
         }
       ],
-      "title": "Positive Prompt",
       "properties": {
         "Node name for S&R": "TextEncodeQwenImageEditPlus",
         "cnr_id": "comfy-core"
       },
       "widgets_values": [
-        "Change only the requested parts of the image. Preserve identity, facial features, body proportions, composition, and unrelated details. Keep the result realistic and coherent."
-      ]
+        "Change only the requested parts. Preserve identity and unrelated details unless the prompt explicitly asks to change them. Keep the result coherent."
+      ],
+      "title": "Positive Prompt"
     },
     {
       "id": 7,
       "type": "TextEncodeQwenImageEditPlus",
       "pos": [
-        -500,
-        300
+        -570,
+        280
       ],
       "size": [
-        480,
+        500,
         230
       ],
       "flags": {},
-      "order": 7,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
@@ -323,7 +364,7 @@
           "name": "image2",
           "type": "IMAGE",
           "shape": 7,
-          "link": 24
+          "link": 13
         },
         {
           "name": "image3",
@@ -337,67 +378,28 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            13
+            15
           ]
         }
       ],
-      "title": "Negative Prompt",
       "properties": {
         "Node name for S&R": "TextEncodeQwenImageEditPlus",
         "cnr_id": "comfy-core"
       },
       "widgets_values": [
         ""
-      ]
+      ],
+      "title": "Negative Prompt"
     },
     {
       "id": 8,
       "type": "FluxKontextMultiReferenceLatentMethod",
       "pos": [
-        60,
-        40
+        0,
+        30
       ],
       "size": [
-        280,
-        70
-      ],
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "conditioning",
-          "type": "CONDITIONING",
-          "link": 12
-        }
-      ],
-      "outputs": [
-        {
-          "name": "CONDITIONING",
-          "type": "CONDITIONING",
-          "links": [
-            14
-          ]
-        }
-      ],
-      "title": "Positive Reference Method",
-      "properties": {
-        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod",
-        "cnr_id": "comfy-core"
-      },
-      "widgets_values": [
-        "index_timestep_zero"
-      ]
-    },
-    {
-      "id": 9,
-      "type": "FluxKontextMultiReferenceLatentMethod",
-      "pos": [
-        60,
-        330
-      ],
-      "size": [
-        280,
+        300,
         70
       ],
       "flags": {},
@@ -407,7 +409,7 @@
         {
           "name": "conditioning",
           "type": "CONDITIONING",
-          "link": 13
+          "link": 14
         }
       ],
       "outputs": [
@@ -415,32 +417,71 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            15
+            25
           ]
         }
       ],
-      "title": "Negative Reference Method",
       "properties": {
         "Node name for S&R": "FluxKontextMultiReferenceLatentMethod",
         "cnr_id": "comfy-core"
       },
       "widgets_values": [
         "index_timestep_zero"
-      ]
+      ],
+      "title": "Positive Reference Method"
+    },
+    {
+      "id": 9,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [
+        0,
+        320
+      ],
+      "size": [
+        300,
+        70
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            26
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "index_timestep_zero"
+      ],
+      "title": "Negative Reference Method"
     },
     {
       "id": 10,
       "type": "VAEEncode",
       "pos": [
-        60,
-        520
+        0,
+        500
       ],
       "size": [
         250,
         100
       ],
       "flags": {},
-      "order": 10,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
@@ -459,7 +500,7 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            16
+            27
           ]
         }
       ],
@@ -473,15 +514,15 @@
       "id": 11,
       "type": "ModelSamplingAuraFlow",
       "pos": [
-        -500,
-        660
+        -570,
+        650
       ],
       "size": [
         280,
         110
       ],
       "flags": {},
-      "order": 11,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
@@ -495,7 +536,7 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            17
+            16
           ]
         }
       ],
@@ -511,21 +552,21 @@
       "id": 12,
       "type": "CFGNorm",
       "pos": [
-        -150,
-        660
+        -220,
+        650
       ],
       "size": [
         270,
         130
       ],
       "flags": {},
-      "order": 12,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 17
+          "link": 16
         }
       ],
       "outputs": [
@@ -533,7 +574,7 @@
           "name": "patched_model",
           "type": "MODEL",
           "links": [
-            18
+            17
           ]
         }
       ],
@@ -550,16 +591,62 @@
       "id": 13,
       "type": "LoraLoaderModelOnly",
       "pos": [
-        190,
-        660
+        120,
+        650
       ],
       "size": [
-        430,
+        440,
         140
       ],
       "flags": {},
-      "order": 13,
+      "order": 14,
       "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            18
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "cnr_id": "comfy-core",
+        "models": [
+          {
+            "name": "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+            "directory": "loras"
+          }
+        ]
+      },
+      "widgets_values": [
+        "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+        1.0
+      ],
+      "title": "REQUIRED — Lightning 4-Step — ALWAYS ON"
+    },
+    {
+      "id": 20,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        640,
+        650
+      ],
+      "size": [
+        440,
+        150
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 4,
       "inputs": [
         {
           "name": "model",
@@ -581,51 +668,275 @@
         "cnr_id": "comfy-core",
         "models": [
           {
-            "name": "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
-            "url": "https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning/resolve/main/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+            "name": "URP_20.safetensors",
             "directory": "loras"
           }
         ]
       },
       "widgets_values": [
-        "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
-        1
-      ]
+        "URP_20.safetensors",
+        0.8
+      ],
+      "title": "Ultra-Realistic Portrait — OFF by default"
+    },
+    {
+      "id": 21,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        1110,
+        650
+      ],
+      "size": [
+        440,
+        150
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 19
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            20
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "cnr_id": "comfy-core",
+        "models": [
+          {
+            "name": "HRP_20.safetensors",
+            "directory": "loras"
+          }
+        ]
+      },
+      "widgets_values": [
+        "HRP_20.safetensors",
+        0.8
+      ],
+      "title": "Hyper-Realistic Portrait — OFF by default"
+    },
+    {
+      "id": 22,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        1580,
+        650
+      ],
+      "size": [
+        440,
+        150
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            21
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "cnr_id": "comfy-core",
+        "models": [
+          {
+            "name": "anything2real_2601_A_final_patched.safetensors",
+            "directory": "loras"
+          }
+        ]
+      },
+      "widgets_values": [
+        "anything2real_2601_A_final_patched.safetensors",
+        0.8
+      ],
+      "title": "Anything2Real 2601 — OFF by default"
+    },
+    {
+      "id": 23,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        2050,
+        650
+      ],
+      "size": [
+        440,
+        150
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 21
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            22
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "cnr_id": "comfy-core",
+        "models": [
+          {
+            "name": "SEXGOD_FemaleNudity_QwenEdit_2511_v2.safetensors",
+            "directory": "loras"
+          }
+        ]
+      },
+      "widgets_values": [
+        "SEXGOD_FemaleNudity_QwenEdit_2511_v2.safetensors",
+        0.8
+      ],
+      "title": "SexGod Female Nudity v2 — OFF by default"
+    },
+    {
+      "id": 24,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        2520,
+        650
+      ],
+      "size": [
+        440,
+        150
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 22
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            30
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "cnr_id": "comfy-core",
+        "models": [
+          {
+            "name": "qwen-image-edit-plus-nsfw-lora.safetensors",
+            "directory": "loras"
+          }
+        ]
+      },
+      "widgets_values": [
+        "qwen-image-edit-plus-nsfw-lora.safetensors",
+        0.8
+      ],
+      "title": "MCNL-NSFW-v1 — OFF by default"
+    },
+    {
+      "id": 25,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        3460,
+        650
+      ],
+      "size": [
+        440,
+        150
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 31
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            24
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "",
+        0.8
+      ],
+      "title": "Custom LoRA — OFF by default"
     },
     {
       "id": 14,
       "type": "KSampler",
       "pos": [
-        1190,
-        120
+        3990,
+        80
       ],
       "size": [
         320,
         360
       ],
       "flags": {},
-      "order": 15,
+      "order": 30,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 22
+          "link": 24
         },
         {
           "name": "positive",
           "type": "CONDITIONING",
-          "link": 14
+          "link": 25
         },
         {
           "name": "negative",
           "type": "CONDITIONING",
-          "link": 15
+          "link": 26
         },
         {
           "name": "latent_image",
           "type": "LATENT",
-          "link": 16
+          "link": 27
         }
       ],
       "outputs": [
@@ -633,7 +944,7 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            20
+            28
           ]
         }
       ],
@@ -655,21 +966,21 @@
       "id": 15,
       "type": "VAEDecode",
       "pos": [
-        1570,
-        170
+        4370,
+        160
       ],
       "size": [
         250,
         100
       ],
       "flags": {},
-      "order": 15,
+      "order": 31,
       "mode": 0,
       "inputs": [
         {
           "name": "samples",
           "type": "LATENT",
-          "link": 20
+          "link": 28
         },
         {
           "name": "vae",
@@ -682,7 +993,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            21
+            29
           ]
         }
       ],
@@ -696,21 +1007,21 @@
       "id": 16,
       "type": "SaveImage",
       "pos": [
-        1900,
-        100
+        4690,
+        80
       ],
       "size": [
         420,
         420
       ],
       "flags": {},
-      "order": 16,
+      "order": 32,
       "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 21
+          "link": 29
         }
       ],
       "outputs": [
@@ -729,24 +1040,24 @@
       ]
     },
     {
-      "id": 18,
+      "id": 101,
       "type": "LoraLoaderModelOnly",
       "pos": [
-        680,
+        2990,
         650
       ],
       "size": [
-        430,
+        440,
         150
       ],
       "flags": {},
-      "order": 14,
+      "order": 25,
       "mode": 4,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 19
+          "link": 30
         }
       ],
       "outputs": [
@@ -754,58 +1065,24 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            22
+            31
           ]
         }
       ],
-      "title": "Custom LoRA — BYPASSED by default",
+      "title": "Unblur + Upscale 20 — OFF by default",
       "properties": {
         "Node name for S&R": "LoraLoaderModelOnly",
-        "cnr_id": "comfy-core"
+        "cnr_id": "comfy-core",
+        "models": [
+          {
+            "name": "Qwen-Image-Edit-Unblur-Upscale_20.safetensors",
+            "directory": "loras"
+          }
+        ]
       },
       "widgets_values": [
-        "",
+        "Qwen-Image-Edit-Unblur-Upscale_20.safetensors",
         0.8
-      ]
-    },
-    {
-      "id": 19,
-      "type": "LoadImage",
-      "pos": [
-        -980,
-        120
-      ],
-      "size": [
-        320,
-        360
-      ],
-      "flags": {},
-      "order": 2,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            23,
-            24
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "title": "Load Image 2 — Optional Reference",
-      "properties": {
-        "Node name for S&R": "LoadImage",
-        "cnr_id": "comfy-core"
-      },
-      "widgets_values": [
-        "",
-        "image"
       ]
     }
   ],
@@ -900,6 +1177,22 @@
     ],
     [
       12,
+      19,
+      0,
+      6,
+      3,
+      "IMAGE"
+    ],
+    [
+      13,
+      19,
+      0,
+      7,
+      3,
+      "IMAGE"
+    ],
+    [
+      14,
       6,
       0,
       8,
@@ -907,7 +1200,7 @@
       "CONDITIONING"
     ],
     [
-      13,
+      15,
       7,
       0,
       9,
@@ -915,31 +1208,7 @@
       "CONDITIONING"
     ],
     [
-      14,
-      8,
-      0,
-      14,
-      1,
-      "CONDITIONING"
-    ],
-    [
-      15,
-      9,
-      0,
-      14,
-      2,
-      "CONDITIONING"
-    ],
-    [
       16,
-      10,
-      0,
-      14,
-      3,
-      "LATENT"
-    ],
-    [
-      17,
       11,
       0,
       12,
@@ -947,7 +1216,7 @@
       "MODEL"
     ],
     [
-      18,
+      17,
       12,
       0,
       13,
@@ -955,15 +1224,79 @@
       "MODEL"
     ],
     [
-      19,
+      18,
       13,
       0,
-      18,
+      20,
+      0,
+      "MODEL"
+    ],
+    [
+      19,
+      20,
+      0,
+      21,
       0,
       "MODEL"
     ],
     [
       20,
+      21,
+      0,
+      22,
+      0,
+      "MODEL"
+    ],
+    [
+      21,
+      22,
+      0,
+      23,
+      0,
+      "MODEL"
+    ],
+    [
+      22,
+      23,
+      0,
+      24,
+      0,
+      "MODEL"
+    ],
+    [
+      24,
+      25,
+      0,
+      14,
+      0,
+      "MODEL"
+    ],
+    [
+      25,
+      8,
+      0,
+      14,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      26,
+      9,
+      0,
+      14,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      27,
+      10,
+      0,
+      14,
+      3,
+      "LATENT"
+    ],
+    [
+      28,
       14,
       0,
       15,
@@ -971,7 +1304,7 @@
       "LATENT"
     ],
     [
-      21,
+      29,
       15,
       0,
       16,
@@ -979,38 +1312,30 @@
       "IMAGE"
     ],
     [
-      22,
-      18,
+      30,
+      24,
       0,
-      14,
+      101,
       0,
       "MODEL"
     ],
     [
-      23,
-      19,
+      31,
+      101,
       0,
-      6,
-      3,
-      "IMAGE"
-    ],
-    [
-      24,
-      19,
+      25,
       0,
-      7,
-      3,
-      "IMAGE"
+      "MODEL"
     ]
   ],
   "groups": [],
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.75,
+      "scale": 0.7,
       "offset": [
-        1100,
-        450
+        900,
+        420
       ]
     },
     "workflowRendererVersion": "LG"

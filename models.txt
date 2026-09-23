@@ -1,28 +1,20 @@
-Qwen Image Edit 2511 — Core files
-==================================
+Qwen Image Edit 2511 — complete model manifest
 
-Core model files installed by bootstrap.sh:
+REQUIRED / ON
+Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors
 
-1) qwen_image_edit_2511_fp8mixed.safetensors
-   -> ComfyUI/models/diffusion_models/
+AUTO-INSTALLED OPTIONAL / workflow default = BYPASS
+URP_20.safetensors
+HRP_20.safetensors
+anything2real_2601_A_final_patched.safetensors
+SEXGOD_FemaleNudity_QwenEdit_2511_v2.safetensors
+qwen-image-edit-plus-nsfw-lora.safetensors
+Qwen-Image-Edit-Unblur-Upscale_20.safetensors
 
-2) qwen_2.5_vl_7b_fp8_scaled.safetensors
-   -> ComfyUI/models/text_encoders/
+EXTRA
+Custom LoRA slot — BYPASS by default.
 
-3) qwen_image_vae.safetensors
-   -> ComfyUI/models/vae/
-
-4) Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors
-   -> ComfyUI/models/loras/
-
-Custom LoRAs
-------------
-Additional user LoRAs also go in:
-
-ComfyUI/models/loras/
-
-Use install-lora.sh to download one directly on the Vast.ai instance.
-
-Important:
-A LoRA must be compatible with Qwen-Image / Qwen-Image-Edit-2511. A LoRA made for SDXL,
-Flux, Wan, or another base model is not automatically compatible.
+SexGod source:
+Civitai modelVersionId 2689224
+Automatic endpoint: https://civitai.com/api/download/models/2689224
+If Civitai requires authentication, export CIVITAI_TOKEN before bootstrap.
