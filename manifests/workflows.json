@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "install_directory": "user/default/workflows/qwen2511",
+  "items": [
+    {
+      "id": "01-general-editor",
+      "name": "General Editor",
+      "category": "general",
+      "path": "workflows/general/01-general-editor.json",
+      "status": "stable",
+      "install_by_default": true,
+      "inputs": [
+        "image-1"
+      ],
+      "description": "General-purpose editing and fast iteration."
+    },
+    {
+      "id": "02-multi-reference-editor",
+      "name": "Multi-Reference Editor",
+      "category": "general",
+      "path": "workflows/general/02-multi-reference-editor.json",
+      "status": "stable",
+      "install_by_default": true,
+      "inputs": [
+        "image-1",
+        "image-2",
+        "image-3"
+      ],
+      "description": "Combine a target image with up to two reference images."
+    },
+    {
+      "id": "10-pose-transfer",
+      "name": "Pose Transfer",
+      "category": "people",
+      "path": "workflows/people/10-pose-transfer.json",
+      "status": "starter",
+      "install_by_default": true,
+      "inputs": [
+        "target",
+        "pose-reference"
+      ],
+      "description": "Transfer body pose while preserving identity."
+    },
+    {
+      "id": "11-clothes-pose-transfer",
+      "name": "Clothes + Pose Transfer",
+      "category": "people",
+      "path": "workflows/people/11-clothes-pose-transfer.json",
+      "status": "starter",
+      "install_by_default": true,
+      "inputs": [
+        "target",
+        "clothes-reference",
+        "pose-reference"
+      ],
+      "description": "Transfer clothing and pose to a target person."
+    },
+    {
+      "id": "12-identity-lock",
+      "name": "Identity Lock",
+      "category": "people",
+      "path": "workflows/people/12-identity-lock.json",
+      "status": "stable",
+      "install_by_default": true,
+      "inputs": [
+        "working-image",
+        "identity-reference"
+      ],
+      "description": "Preserve identity during larger edits."
+    },
+    {
+      "id": "20-material-replacement",
+      "name": "Material Replacement",
+      "category": "editing",
+      "path": "workflows/editing/20-material-replacement.json",
+      "status": "stable",
+      "install_by_default": true,
+      "inputs": [
+        "target",
+        "material-reference"
+      ],
+      "description": "Replace material or object appearance while preserving geometry."
+    },
+    {
+      "id": "21-relighting",
+      "name": "Professional Relighting",
+      "category": "editing",
+      "path": "workflows/editing/21-relighting.json",
+      "status": "stable",
+      "install_by_default": true,
+      "inputs": [
+        "image-1"
+      ],
+      "description": "Lighting-first portrait and scene relighting."
+    },
+    {
+      "id": "22-restoration-unblur",
+      "name": "Restoration / Unblur",
+      "category": "editing",
+      "path": "workflows/editing/22-restoration-unblur.json",
+      "status": "stable",
+      "install_by_default": true,
+      "inputs": [
+        "image-1"
+      ],
+      "description": "Restore detail and reduce blur with Unblur LoRA enabled."
+    },
+    {
+      "id": "90-inpainting-starter",
+      "name": "Smart Inpainting Starter",
+      "category": "experimental",
+      "path": "workflows/experimental/90-inpainting-starter.json",
+      "status": "starter",
+      "install_by_default": true,
+      "inputs": [
+        "image-1"
+      ],
+      "description": "Starter for localized edits; LanPaint is installed for expansion."
+    },
+    {
+      "id": "91-layered-editor-starter",
+      "name": "Layered Editor Starter",
+      "category": "experimental",
+      "path": "workflows/experimental/91-layered-editor-starter.json",
+      "status": "starter",
+      "install_by_default": true,
+      "inputs": [
+        "image-1"
+      ],
+      "description": "Starter scaffold for future Qwen Image Layered workflows."
+    },
+    {
+      "id": "legacy-simple",
+      "name": "Legacy Simple",
+      "category": "legacy",
+      "path": "workflows/legacy/qwen2511-simple.json",
+      "status": "deprecated",
+      "install_by_default": false,
+      "description": "Previous simple workflow retained for reference."
+    },
+    {
+      "id": "legacy-custom-lora",
+      "name": "Legacy Custom LoRA",
+      "category": "legacy",
+      "path": "workflows/legacy/qwen2511-custom-lora.json",
+      "status": "deprecated",
+      "install_by_default": false,
+      "description": "Previous custom LoRA workflow retained for reference."
+    },
+    {
+      "id": "legacy-multi-image",
+      "name": "Legacy Multi Image",
+      "category": "legacy",
+      "path": "workflows/legacy/qwen2511-multi-image-lora.json",
+      "status": "deprecated",
+      "install_by_default": false,
+      "description": "Previous multi-image workflow retained for reference."
+    },
+    {
+      "id": "legacy-alias",
+      "name": "Legacy Workflow Alias",
+      "category": "legacy",
+      "path": "workflows/legacy/qwen2511-workflow-alias.json",
+      "status": "deprecated",
+      "install_by_default": false,
+      "description": "Backward-compatible alias retained as archived reference."
+    }
+  ]
+}

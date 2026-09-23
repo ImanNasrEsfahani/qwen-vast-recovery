@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "description": "Models and LoRAs installed by the Qwen Vast Recovery bootstrap.",
+  "items": [
+    {
+      "id": "qwen-edit-2511-fp8",
+      "name": "Qwen Image Edit 2511 FP8 Mixed",
+      "kind": "diffusion_model",
+      "provider": "huggingface",
+      "repo_id": "Comfy-Org/Qwen-Image-Edit_ComfyUI",
+      "filename": "split_files/diffusion_models/qwen_image_edit_2511_fp8mixed.safetensors",
+      "target": "models/diffusion_models/qwen_image_edit_2511_fp8mixed.safetensors",
+      "install_by_default": true,
+      "required": true
+    },
+    {
+      "id": "qwen-vl-text-encoder",
+      "name": "Qwen 2.5 VL 7B FP8 Scaled",
+      "kind": "text_encoder",
+      "provider": "huggingface",
+      "repo_id": "Comfy-Org/HunyuanVideo_1.5_repackaged",
+      "filename": "split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "target": "models/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "install_by_default": true,
+      "required": true
+    },
+    {
+      "id": "qwen-image-vae",
+      "name": "Qwen Image VAE",
+      "kind": "vae",
+      "provider": "huggingface",
+      "repo_id": "Comfy-Org/Qwen-Image_ComfyUI",
+      "filename": "split_files/vae/qwen_image_vae.safetensors",
+      "target": "models/vae/qwen_image_vae.safetensors",
+      "install_by_default": true,
+      "required": true
+    },
+    {
+      "id": "lightning-4step",
+      "name": "Qwen Image Edit 2511 Lightning 4-Step",
+      "kind": "lora",
+      "provider": "huggingface",
+      "repo_id": "lightx2v/Qwen-Image-Edit-2511-Lightning",
+      "filename": "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "target": "models/loras/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "install_by_default": true,
+      "required": true,
+      "workflow_default": "enabled"
+    },
+    {
+      "id": "ultra-realistic-portrait",
+      "name": "Ultra-Realistic Portrait",
+      "kind": "lora",
+      "provider": "huggingface",
+      "repo_id": "prithivMLmods/Qwen-Image-Edit-2511-Ultra-Realistic-Portrait",
+      "filename": "URP_20.safetensors",
+      "target": "models/loras/URP_20.safetensors",
+      "install_by_default": true,
+      "required": false,
+      "workflow_default": "bypassed"
+    },
+    {
+      "id": "hyper-realistic-portrait",
+      "name": "Hyper-Realistic Portrait",
+      "kind": "lora",
+      "provider": "huggingface",
+      "repo_id": "prithivMLmods/Qwen-Image-Edit-2511-Hyper-Realistic-Portrait",
+      "filename": "HRP_20.safetensors",
+      "target": "models/loras/HRP_20.safetensors",
+      "install_by_default": true,
+      "required": false,
+      "workflow_default": "bypassed"
+    },
+    {
+      "id": "anything2real",
+      "name": "Anything2Real 2601",
+      "kind": "lora",
+      "provider": "huggingface",
+      "repo_id": "lrzjason/Anything2Real",
+      "filename": "anything2real_2601_A_final_patched.safetensors",
+      "target": "models/loras/anything2real_2601_A_final_patched.safetensors",
+      "install_by_default": true,
+      "required": false,
+      "workflow_default": "bypassed"
+    },
+    {
+      "id": "sexgod-v2",
+      "name": "SexGod Female Nudity v2",
+      "kind": "lora",
+      "provider": "civitai",
+      "model_version_id": 2689224,
+      "filename": "SEXGOD_FemaleNudity_QwenEdit_2511_v2.safetensors",
+      "target": "models/loras/SEXGOD_FemaleNudity_QwenEdit_2511_v2.safetensors",
+      "install_by_default": true,
+      "required": false,
+      "workflow_default": "bypassed",
+      "env_token": "CIVITAI_TOKEN"
+    },
+    {
+      "id": "mcnl-nsfw-v1",
+      "name": "MCNL-NSFW-v1",
+      "kind": "lora",
+      "provider": "huggingface",
+      "repo_id": "ScottzillaSystems/qwen-image-edit-plus-nsfw-lora",
+      "filename": "qwen-image-edit-plus-nsfw-lora.safetensors",
+      "target": "models/loras/qwen-image-edit-plus-nsfw-lora.safetensors",
+      "install_by_default": true,
+      "required": false,
+      "workflow_default": "bypassed"
+    },
+    {
+      "id": "unblur-upscale-20",
+      "name": "Qwen Image Edit Unblur Upscale 20",
+      "kind": "lora",
+      "provider": "huggingface",
+      "repo_id": "prithivMLmods/Qwen-Image-Edit-2511-Unblur-Upscale",
+      "filename": "Qwen-Image-Edit-Unblur-Upscale_20.safetensors",
+      "target": "models/loras/Qwen-Image-Edit-Unblur-Upscale_20.safetensors",
+      "install_by_default": true,
+      "required": false,
+      "workflow_default": "bypassed"
+    }
+  ]
+}

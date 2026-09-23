@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "description": "Advanced ComfyUI custom nodes used or recommended by advanced workflows.",
+  "items": [
+    {
+      "id": "controlnet-aux",
+      "name": "ComfyUI ControlNet Aux",
+      "repo": "https://github.com/Fannovel16/comfyui_controlnet_aux.git",
+      "directory": "comfyui_controlnet_aux",
+      "install_by_default": true,
+      "install_requirements": true,
+      "run_install_py": false,
+      "used_by": [
+        "10-pose-transfer",
+        "11-clothes-pose-transfer"
+      ]
+    },
+    {
+      "id": "impact-pack",
+      "name": "ComfyUI Impact Pack",
+      "repo": "https://github.com/ltdrdata/ComfyUI-Impact-Pack.git",
+      "directory": "ComfyUI-Impact-Pack",
+      "install_by_default": true,
+      "install_requirements": true,
+      "run_install_py": true,
+      "used_by": [
+        "10-pose-transfer",
+        "11-clothes-pose-transfer",
+        "12-identity-lock",
+        "22-restoration-unblur"
+      ]
+    },
+    {
+      "id": "impact-subpack",
+      "name": "ComfyUI Impact Subpack",
+      "repo": "https://github.com/ltdrdata/ComfyUI-Impact-Subpack.git",
+      "directory": "ComfyUI-Impact-Subpack",
+      "install_by_default": true,
+      "install_requirements": true,
+      "run_install_py": false,
+      "used_by": [
+        "10-pose-transfer",
+        "11-clothes-pose-transfer"
+      ]
+    },
+    {
+      "id": "lanpaint",
+      "name": "LanPaint",
+      "repo": "https://github.com/scraed/LanPaint.git",
+      "directory": "LanPaint",
+      "install_by_default": true,
+      "install_requirements": true,
+      "run_install_py": false,
+      "used_by": [
+        "90-inpainting-starter"
+      ]
+    }
+  ]
+}

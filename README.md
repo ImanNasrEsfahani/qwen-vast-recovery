@@ -1,52 +1,79 @@
-# Qwen Image Edit 2511 — Vast.ai Recovery Pack
+# Qwen Vast Recovery
 
-Complete edition. All requested LoRAs are automatically downloaded by `bootstrap.sh`.
+A structured, reproducible ComfyUI recovery pack for **Qwen Image Edit 2511** on Vast.ai and other Linux GPU hosts.
 
-## Required / always enabled
-- Qwen Image Edit 2511 Lightning 4-step
+The project keeps installation simple for users while keeping the repository maintainable for future workflows, LoRAs, models, and custom nodes.
 
-## Auto-installed optional LoRAs
-All nodes below are present in every workflow and start in **Bypass/OFF**:
-- Ultra-Realistic Portrait — `URP_20.safetensors`
-- Hyper-Realistic Portrait — `HRP_20.safetensors`
-- Anything2Real — `anything2real_2601_A_final_patched.safetensors`
-- SexGod v2 — `SEXGOD_FemaleNudity_QwenEdit_2511_v2.safetensors`
-- MCNL-NSFW-v1 — `qwen-image-edit-plus-nsfw-lora.safetensors`
-- Unblur/Upscale — `Qwen-Image-Edit-Unblur-Upscale_20.safetensors`
-- Custom LoRA slot
+## Quick install
 
-## Chain
-Base → CFGNorm → Lightning (ON) → Ultra → Hyper → Anything2Real → SexGod → MCNL → Unblur → Custom → KSampler
+```bash
+curl -fsSL https://raw.githubusercontent.com/ImanNasrEsfahani/qwen-vast-recovery/main/bootstrap.sh | bash
+```
 
-## Workflows
-- qwen2511-simple.json
-- qwen2511-custom-lora.json
-- qwen2511-multi-image-lora.json
-- qwen2511-workflow.json (simple alias)
+If Civitai authentication is required:
 
-## Civitai authentication
-SexGod v2 uses Civitai model version `2689224`.
-If Civitai permits anonymous download, bootstrap needs nothing extra.
-If authentication is required:
 ```bash
 export CIVITAI_TOKEN='YOUR_TOKEN'
 curl -fsSL https://raw.githubusercontent.com/ImanNasrEsfahani/qwen-vast-recovery/main/bootstrap.sh | bash
 ```
 
-## Normal install
-```bash
-curl -fsSL https://raw.githubusercontent.com/ImanNasrEsfahani/qwen-vast-recovery/main/bootstrap.sh | bash
+## Repository layout
+
+```text
+qwen-vast-recovery/
+├── bootstrap.sh                 # stable one-command entry point
+├── manifests/                   # single source of truth
+│   ├── models.json
+│   ├── custom-nodes.json
+│   └── workflows.json
+├── workflows/
+│   ├── general/
+│   ├── people/
+│   ├── editing/
+│   ├── experimental/
+│   └── legacy/
+├── scripts/                     # installation + verification + validation
+├── docs/                        # user and maintainer documentation
+└── .github/workflows/           # repository validation
 ```
 
+## Design principles
 
-## Added workflow pack
-This bundle now includes a `workflow_pack/` folder with 10 clearly named editing workflows.
+- **One source of truth:** model, node, and workflow lists live in manifests.
+- **One-command install:** `bootstrap.sh` remains the public entry point.
+- **No duplicated install lists:** installer and verifier read the same manifests.
+- **Clear workflow categories:** general, people, editing, experimental, legacy.
+- **Safe growth:** adding a workflow or LoRA does not require rewriting the installer.
+- **Validation:** workflow graph integrity and manifest paths are checked automatically.
 
-Extra helper files:
-- WORKFLOW_INDEX.md
-- ADVANCED_REQUIREMENTS.md
-- install-advanced-nodes.sh
+## Installed workflow library
 
-To use:
-- copy the JSON files from `workflow_pack/` into `ComfyUI/user/default/workflows/`
-- or drag and drop each JSON directly into ComfyUI
+### General
+- `01-general-editor` — daily general-purpose editing
+- `02-multi-reference-editor` — target + multiple references
+
+### People
+- `10-pose-transfer`
+- `11-clothes-pose-transfer`
+- `12-identity-lock`
+
+### Editing
+- `20-material-replacement`
+- `21-relighting`
+- `22-restoration-unblur`
+
+### Experimental / starters
+- `90-inpainting-starter`
+- `91-layered-editor-starter`
+
+Old workflows are kept under `workflows/legacy/` for reference and are not installed by default.
+
+## Documentation
+
+- [Architecture](docs/ARCHITECTURE.md)
+- [Installation](docs/INSTALLATION.md)
+- [Workflow catalog](docs/WORKFLOWS.md)
+- [Models and LoRAs](docs/MODELS.md)
+- [Adding workflows](docs/ADDING_WORKFLOWS.md)
+- [Troubleshooting](docs/TROUBLESHOOTING.md)
+- [Migration from the old layout](docs/MIGRATION.md)

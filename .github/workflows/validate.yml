@@ -1,0 +1,21 @@
+name: Validate repository
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate manifests and workflows
+        run: python scripts/validate_repo.py
+      - name: Check shell syntax
+        run: |
+          bash -n bootstrap.sh
+          bash -n scripts/install.sh
+          bash -n scripts/install_lora.sh
