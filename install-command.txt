@@ -1,0 +1,9 @@
+Qwen Image Edit 2511 — Vast.ai one-command install
+
+Run this inside Jupyter Terminal on a fresh Vast.ai ComfyUI instance:
+
+curl -fsSL https://raw.githubusercontent.com/ImanNasrEsfahani/qwen-vast-recovery/main/bootstrap.sh | bash
+
+Verification command:
+
+curl -fsSL https://raw.githubusercontent.com/ImanNasrEsfahani/qwen-vast-recovery/main/verify-install.sh | bash

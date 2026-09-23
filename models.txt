@@ -1,36 +1,75 @@
-Qwen Image Edit 2511 - Required Models
+Qwen Image Edit 2511 — Required files
+==========================================
 
-1. Diffusion Model
+Diffusion model
+---------------
+File:
 qwen_image_edit_2511_fp8mixed.safetensors
+
 Repository:
 Comfy-Org/Qwen-Image-Edit_ComfyUI
+
+Hugging Face path:
+split_files/diffusion_models/qwen_image_edit_2511_fp8mixed.safetensors
 
 Destination:
 ComfyUI/models/diffusion_models/
 
 
-2. Text Encoder
+Text encoder
+------------
+File:
 qwen_2.5_vl_7b_fp8_scaled.safetensors
+
 Repository:
 Comfy-Org/HunyuanVideo_1.5_repackaged
+
+Hugging Face path:
+split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors
 
 Destination:
 ComfyUI/models/text_encoders/
 
 
-3. VAE
+VAE
+---
+File:
 qwen_image_vae.safetensors
+
 Repository:
 Comfy-Org/Qwen-Image_ComfyUI
+
+Hugging Face path:
+split_files/vae/qwen_image_vae.safetensors
 
 Destination:
 ComfyUI/models/vae/
 
 
-4. Lightning LoRA
+4-step acceleration LoRA
+------------------------
+File:
 Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors
+
 Repository:
 lightx2v/Qwen-Image-Edit-2511-Lightning
 
 Destination:
 ComfyUI/models/loras/
+
+
+Workflow
+--------
+File:
+qwen2511-workflow.json
+
+Destination:
+ComfyUI/user/default/workflows/
+
+Notes
+-----
+The workflow is configured for the 4-step Lightning LoRA:
+Steps = 4
+CFG = 1.0
+Sampler = euler
+Scheduler = simple
