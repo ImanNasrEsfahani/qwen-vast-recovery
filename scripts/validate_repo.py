@@ -49,6 +49,32 @@ def validate_workflow(path: Path):
         raise ValueError("missing USER NEGATIVE node")
 
 
+    # Current native ComfyUI schema checks for nodes this repository constructs manually.
+    expected_qwen_inputs = ["clip", "vae", "image1", "image2", "image3", "prompt"]
+    for node in [n for n in data.get("nodes", []) if n.get("type") == "TextEncodeQwenImageEditPlus"]:
+        names = [x.get("name") for x in node.get("inputs", [])]
+        present_expected = [x for x in expected_qwen_inputs if x in names]
+        if names[:len(present_expected)] != present_expected:
+            raise ValueError(f"TextEncodeQwenImageEditPlus input order is not current-schema compatible: {names}")
+
+    for node in [n for n in data.get("nodes", []) if n.get("type") == "StringConcatenate"]:
+        if len(node.get("widgets_values", [])) < 3:
+            raise ValueError("StringConcatenate must serialize string_a, string_b, delimiter widget state")
+
+    for node in [n for n in data.get("nodes", []) if n.get("type") == "ReActorFaceSwap"]:
+        if len(node.get("widgets_values", [])) != 11:
+            raise ValueError("ReActorFaceSwap widget schema must have 11 values")
+        names = [x.get("name") for x in node.get("inputs", [])]
+        if names[:4] != ["input_image", "source_image", "face_model", "face_boost"]:
+            raise ValueError(f"ReActorFaceSwap input schema mismatch: {names}")
+
+    # Generic Impact FaceDetailer is intentionally excluded from the default Qwen edit chain.
+    forbidden_impact = {"FaceDetailerPipe", "BasicPipeToDetailerPipe", "ToBasicPipe", "UltralyticsDetectorProvider"}
+    present_forbidden = sorted({n.get("type") for n in data.get("nodes", []) if n.get("type") in forbidden_impact})
+    if present_forbidden:
+        raise ValueError(f"Impact FaceDetailer nodes are not allowed in production v8 workflows: {present_forbidden}")
+
+
 def main():
     errors = []
 

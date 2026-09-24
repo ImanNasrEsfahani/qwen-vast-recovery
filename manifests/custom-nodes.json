@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "description": "Advanced ComfyUI custom nodes used by the active workflows, including Face Guard v6 face-preservation branches.",
+  "description": "Production v8 custom-node manifest. Only pinned ReActor is required by the default identity workflows; Impact Pack/Subpack are not used by production workflows.",
   "items": [
     {
       "id": "controlnet-aux",
       "name": "ComfyUI ControlNet Aux",
       "repo": "https://github.com/Fannovel16/comfyui_controlnet_aux.git",
       "directory": "comfyui_controlnet_aux",
-      "install_by_default": true,
+      "install_by_default": false,
       "install_requirements": true,
       "run_install_py": false,
       "used_by": [
@@ -23,25 +23,14 @@
       "name": "ComfyUI Impact Pack",
       "repo": "https://github.com/ltdrdata/ComfyUI-Impact-Pack.git",
       "directory": "ComfyUI-Impact-Pack",
-      "install_by_default": true,
+      "install_by_default": false,
       "install_requirements": true,
       "run_install_py": false,
       "used_by": [
-        "01-general-editor",
-        "02-multi-reference-editor",
         "10-pose-transfer",
         "11-clothes-pose-transfer",
         "12-identity-lock",
-        "20-material-replacement",
-        "21-relighting",
-        "22-restoration-unblur",
-        "23-configurable-upscale",
-        "90-inpainting-starter",
-        "91-layered-editor-starter",
-        "legacy-simple",
-        "legacy-custom-lora",
-        "legacy-multi-image",
-        "legacy-alias"
+        "22-restoration-unblur"
       ],
       "required": false,
       "failure_policy": "warn-and-continue",
@@ -52,25 +41,12 @@
       "name": "ComfyUI Impact Subpack",
       "repo": "https://github.com/ltdrdata/ComfyUI-Impact-Subpack.git",
       "directory": "ComfyUI-Impact-Subpack",
-      "install_by_default": true,
+      "install_by_default": false,
       "install_requirements": true,
       "run_install_py": false,
       "used_by": [
-        "01-general-editor",
-        "02-multi-reference-editor",
         "10-pose-transfer",
-        "11-clothes-pose-transfer",
-        "12-identity-lock",
-        "20-material-replacement",
-        "21-relighting",
-        "22-restoration-unblur",
-        "23-configurable-upscale",
-        "90-inpainting-starter",
-        "91-layered-editor-starter",
-        "legacy-simple",
-        "legacy-custom-lora",
-        "legacy-multi-image",
-        "legacy-alias"
+        "11-clothes-pose-transfer"
       ],
       "required": false,
       "failure_policy": "warn-and-continue",
@@ -81,7 +57,7 @@
       "name": "LanPaint",
       "repo": "https://github.com/scraed/LanPaint.git",
       "directory": "LanPaint",
-      "install_by_default": true,
+      "install_by_default": false,
       "install_requirements": true,
       "run_install_py": false,
       "used_by": [
@@ -93,39 +69,45 @@
     },
     {
       "id": "reactor",
-      "name": "ComfyUI ReActor",
+      "name": "ComfyUI ReActor 0.7.1-b3 (pinned)",
       "repo": "https://github.com/Gourieff/ComfyUI-ReActor.git",
       "directory": "ComfyUI-ReActor",
       "install_by_default": true,
       "install_requirements": true,
-      "run_install_py": false,
-      "required": false,
-      "failure_policy": "warn-and-continue",
+      "run_install_py": true,
+      "required": true,
+      "failure_policy": "required-but-continue-stage",
       "source_url": "https://github.com/Gourieff/ComfyUI-ReActor",
       "used_by": [
-        "01-general-editor",
-        "02-multi-reference-editor",
-        "10-pose-transfer",
-        "11-clothes-pose-transfer",
-        "12-identity-lock",
         "20-material-replacement",
         "21-relighting",
         "22-restoration-unblur",
         "23-configurable-upscale",
         "90-inpainting-starter",
         "91-layered-editor-starter",
-        "legacy-simple",
-        "legacy-custom-lora",
-        "legacy-multi-image",
-        "legacy-alias"
+        "01-general-editor",
+        "02-multi-reference-editor",
+        "qwen2511-custom-lora",
+        "qwen2511-multi-image-lora",
+        "qwen2511-simple",
+        "qwen2511-workflow-alias",
+        "10-pose-transfer",
+        "11-clothes-pose-transfer",
+        "12-identity-lock"
       ],
-      "extra_pip_packages": [
-        "tf-keras"
-      ]
+      "required_assets": [
+        {
+          "path": "models/insightface/inswapper_128.onnx",
+          "min_size": 1000000,
+          "url": "https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/inswapper_128.onnx",
+          "sha256": "e4a3f08c753cb72d04e10aa0f7dbe3deebbf39567d4ead6dce08e98aa49e16af"
+        }
+      ],
+      "ref": "a12c5b19dcac9ae8b47e592da39c9711c8f8c756"
     }
   ],
   "source_audit": {
     "last_verified": "2026-09-23",
-    "note": "Repositories verified as public GitHub projects. They are optional tooling; failures do not abort the main install."
+    "note": "ReActor pinned to a12c5b19dcac9ae8b47e592da39c9711c8f8c756. Official install.py is executed. inswapper_128.onnx is hash-verified and has a direct fallback source. Impact Pack/Subpack are not required by production v8 workflows."
   }
 }

@@ -53,7 +53,7 @@
       "filename": "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
       "target": "models/loras/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
       "install_by_default": true,
-      "required": false,
+      "required": true,
       "workflow_default": "enabled",
       "failure_policy": "warn-and-continue",
       "source_url": "https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning/blob/main/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
@@ -156,7 +156,7 @@
       "filename": "Qwen-Image-Edit-Unblur-Upscale_20.safetensors",
       "target": "models/loras/Qwen-Image-Edit-Unblur-Upscale_20.safetensors",
       "install_by_default": true,
-      "required": false,
+      "required": true,
       "workflow_default": "bypassed",
       "failure_policy": "warn-and-continue",
       "source_url": "https://huggingface.co/prithivMLmods/Qwen-Image-Edit-2511-Unblur-Upscale/blob/main/Qwen-Image-Edit-Unblur-Upscale_20.safetensors",
@@ -165,6 +165,6 @@
   ],
   "source_audit": {
     "last_verified": "2026-09-23",
-    "note": "Primary URLs/repositories were checked against current public Hugging Face/GitHub sources. Optional failures must not stop installation."
+    "note": "Core sources re-audited. Lightning is required because default workflows use it ON. Unblur is required because restoration/upscale workflows use it ON. Optional LoRA failures continue without stopping later install stages."
   }
 }

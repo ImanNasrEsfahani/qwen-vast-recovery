@@ -14,7 +14,8 @@
       ],
       "description": "General-purpose editing and fast iteration.",
       "required": true,
-      "failure_policy": "required-but-continue-stage"
+      "failure_policy": "required-but-continue-stage",
+      "face_guard": "present-bypassed"
     },
     {
       "id": "02-multi-reference-editor",
@@ -30,7 +31,8 @@
       ],
       "description": "Combine a target image with up to two reference images.",
       "required": true,
-      "failure_policy": "required-but-continue-stage"
+      "failure_policy": "required-but-continue-stage",
+      "face_guard": "present-bypassed"
     },
     {
       "id": "10-pose-transfer",
@@ -45,7 +47,8 @@
       ],
       "description": "Transfer body pose while preserving identity.",
       "required": false,
-      "failure_policy": "warn-and-continue"
+      "failure_policy": "warn-and-continue",
+      "face_guard": "enabled"
     },
     {
       "id": "11-clothes-pose-transfer",
@@ -61,7 +64,8 @@
       ],
       "description": "Transfer clothing and pose to a target person.",
       "required": false,
-      "failure_policy": "warn-and-continue"
+      "failure_policy": "warn-and-continue",
+      "face_guard": "enabled"
     },
     {
       "id": "12-identity-lock",
@@ -76,7 +80,8 @@
       ],
       "description": "Preserve identity during larger edits.",
       "required": true,
-      "failure_policy": "required-but-continue-stage"
+      "failure_policy": "required-but-continue-stage",
+      "face_guard": "enabled"
     },
     {
       "id": "20-material-replacement",
@@ -91,7 +96,8 @@
       ],
       "description": "Replace material or object appearance while preserving geometry.",
       "required": true,
-      "failure_policy": "required-but-continue-stage"
+      "failure_policy": "required-but-continue-stage",
+      "face_guard": "present-bypassed"
     },
     {
       "id": "21-relighting",
@@ -105,7 +111,8 @@
       ],
       "description": "Lighting-first portrait and scene relighting.",
       "required": true,
-      "failure_policy": "required-but-continue-stage"
+      "failure_policy": "required-but-continue-stage",
+      "face_guard": "present-bypassed"
     },
     {
       "id": "22-restoration-unblur",
@@ -119,7 +126,8 @@
       ],
       "description": "Restore detail and reduce blur with Unblur LoRA enabled.",
       "required": true,
-      "failure_policy": "required-but-continue-stage"
+      "failure_policy": "required-but-continue-stage",
+      "face_guard": "present-bypassed"
     },
     {
       "id": "23-configurable-upscale",
@@ -133,7 +141,8 @@
       ],
       "description": "Configurable enlargement workflow with adjustable output width/height for 2K, 4K, or 8K targets.",
       "required": true,
-      "failure_policy": "required-but-continue-stage"
+      "failure_policy": "required-but-continue-stage",
+      "face_guard": "present-bypassed"
     },
     {
       "id": "90-inpainting-starter",
@@ -145,9 +154,10 @@
       "inputs": [
         "image-1"
       ],
-      "description": "Starter for localized edits; LanPaint is installed for expansion.",
+      "description": "Starter scaffold for localized edits; LanPaint is optional and not installed by default.",
       "required": false,
-      "failure_policy": "warn-and-continue"
+      "failure_policy": "warn-and-continue",
+      "face_guard": "present-bypassed"
     },
     {
       "id": "91-layered-editor-starter",
@@ -161,7 +171,8 @@
       ],
       "description": "Starter scaffold for future Qwen Image Layered workflows.",
       "required": false,
-      "failure_policy": "warn-and-continue"
+      "failure_policy": "warn-and-continue",
+      "face_guard": "present-bypassed"
     },
     {
       "id": "legacy-simple",

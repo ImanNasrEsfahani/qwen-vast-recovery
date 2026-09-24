@@ -41,6 +41,12 @@ echo "ComfyUI: $COMFY"
 echo "Python:  $PYTHON"
 echo "Log:     $LOG_FILE"
 
+log "Checking ComfyUI compatibility"
+if ! "$PYTHON" "$ROOT/scripts/check_comfy_compat.py" --comfy "$COMFY"; then
+  err "ComfyUI must be updated before installing this pack."
+  exit 1
+fi
+
 fatal=0
 
 log "Preparing downloader dependencies"
@@ -67,11 +73,19 @@ if [[ "$fatal" -eq 0 ]]; then
   fi
 fi
 
-log "Installing optional advanced custom nodes"
+log "Installing required/optional custom nodes"
 if ! "$PYTHON" "$ROOT/scripts/install_custom_nodes.py" \
     --manifest "$ROOT/manifests/custom-nodes.json" \
     --comfy "$COMFY"; then
   warn "Some required custom-node component failed. Continuing."
+  fatal=1
+fi
+
+log "Verifying required custom nodes can really import/register"
+if ! "$PYTHON" "$ROOT/scripts/verify_custom_nodes_runtime.py" \
+    --manifest "$ROOT/manifests/custom-nodes.json" \
+    --comfy "$COMFY"; then
+  err "Required custom-node runtime verification failed. Workflow installation will continue, but install is incomplete."
   fatal=1
 fi
 

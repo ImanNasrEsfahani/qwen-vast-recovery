@@ -53,38 +53,17 @@ This is especially important for:
 - object edits
 - background edits
 
-### 5) ReActor face-restore pass
-The active workflows now include a **real ReActor post-process pass** after the main Qwen generation.
+### 5) ReActor fallback
+`ComfyUI-ReActor` is included as an optional custom node dependency.
 
-Default chain:
+Recommended use:
+- run the normal Qwen edit first
+- if the face drifts, use ReActor as a post-process face restore / face re-alignment step
 
-1. Qwen performs the main edit
-2. ReActor restores the identity anchor face back onto the edited result
-3. the restored output continues to the final cleanup stage
-
-### 6) FaceDetailer cleanup pass
-The active workflows also include an **active FaceDetailer cleanup stage** after ReActor.
-
-Use case:
-- recover facial detail after the restore pass
-- refine local face quality
-- keep the result cleaner with limited denoise instead of re-inventing identity
-
-### 7) Face detector branch
-To support FaceDetailer, the workflows now build a detector/detailer stack using:
-- `UltralyticsDetectorProvider`
-- `ToBasicPipe`
-- `BasicPipeToDetailerPipe`
-- `FaceDetailerPipe`
-
-### 8) Prompt Guard
-The workflows use split prompts:
-- SYSTEM PROMPT
-- USER PROMPT
-- SYSTEM NEGATIVE
-- USER NEGATIVE
-
-This keeps the identity-preservation rules protected during normal prompt editing.
+### 6) FaceDetailer as cleanup, not identity source
+If you later build advanced variants with Impact Pack:
+- use FaceDetailer with **low denoise**
+- use it to clean details, not to invent a new face
 
 ## Recommended identity-safe workflow strategy
 
@@ -107,17 +86,21 @@ Keep:
 - clothes reference = clothing only
 
 ### Strongest identity protection
-Best practice stack now implemented in the active workflows:
+Best practice stack:
 
 1. identity anchor image
 2. explicit identity-preserving prompt
 3. local/cropped editing where possible
-4. ReActor post-process face restore
-5. FaceDetailer cleanup
+4. ReActor fallback if needed
+5. FaceDetailer low-denoise cleanup if needed
 
-## Runtime notes
+## Future advanced variants
 
-- If a workflow is used on a non-human image or when no face exists, bypass the Face Guard nodes in ComfyUI.
-- The ReActor branch works best when the identity anchor image has a clear visible face.
-- `12-identity-lock` uses Image 2 as the identity source for the restore pass.
-- ReActor compatibility is improved by installing `tf-keras`.
+A future advanced version of the repository can add dedicated:
+- ReActor post-process workflows
+- Crop-and-stitch identity-safe workflows
+- Face-only restore branches
+- Mask-first inpainting pipelines
+
+
+The workflows now use a split-prompt design with SYSTEM PROMPT / USER PROMPT and SYSTEM NEGATIVE / USER NEGATIVE.

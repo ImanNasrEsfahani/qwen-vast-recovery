@@ -121,14 +121,6 @@ See:
 
 The installer also includes **ComfyUI-ReActor** as an optional custom-node dependency to support post-process face restoration when identity drift happens.
 
-As of **Face Guard v6**, the active workflows now include a real post-process branch for human subjects:
-
-- **Qwen output → ReActor face restore → FaceDetailer cleanup → SaveImage**
-- `Impact Pack` and `Impact Subpack` are now part of the recommended stack across the active library.
-- `tf-keras` is installed for better ReActor compatibility.
-
-If a workflow is used on a non-human image, the Face Guard nodes can be bypassed inside ComfyUI.
-
 
 ## Prompt Guard architecture
 
@@ -140,3 +132,18 @@ The active workflows now protect identity-preservation logic by splitting prompt
 - **USER NEGATIVE** — optional user negatives
 
 This prevents accidental deletion of core identity-preservation instructions when a user edits the prompt.
+
+
+## Production v8 runtime audit
+
+The default identity stack is now **Qwen → ReActor → SaveImage** for people workflows. Generic Impact-Pack FaceDetailer was removed from the default Qwen path because it is not a dependable identity-preserving pass for Qwen Image Edit.
+
+ReActor is installed with its official `install.py`, and the installer verifies `models/insightface/inswapper_128.onnx` exists. Workflows that are not inherently people-focused still contain ReActor but keep it bypassed by default.
+
+The installer also checks that the installed ComfyUI contains the required native Qwen/text nodes before downloading large model files.
+
+## Production v8 missing-node hardening
+
+v8 removes Impact-Pack FaceDetailer nodes from every production workflow, pins ReActor to `a12c5b19dcac9ae8b47e592da39c9711c8f8c756`, runs its official installer, hash-verifies `inswapper_128.onnx`, and performs a real Python import/registration probe before reporting installation success.
+
+See [Production v8](docs/PRODUCTION_V8.md).

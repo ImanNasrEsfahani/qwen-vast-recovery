@@ -1,6 +1,6 @@
 {
-  "last_node_id": 108,
-  "last_link_id": 44,
+  "last_node_id": 104,
+  "last_link_id": 35,
   "nodes": [
     {
       "id": 100,
@@ -23,7 +23,7 @@
         "cnr_id": "comfy-core"
       },
       "widgets_values": [
-        "Qwen Image Edit 2511 — Multi-Image + Optional LoRA Stack\n\nRequired: Lightning 4-step is always enabled.\nOptional LoRAs are installed as separate chained nodes and start in BYPASS mode.\nEnable only the LoRA(s) you need and tune each strength independently.\n\nOptional chain: Ultra Portrait → Hyper Portrait → Anything2Real → SexGod → MCNL-NSFW-v1 → Custom.\n\nFace Guard v6:\n- This workflow now includes an active post-process identity branch: ReActor face restore + FaceDetailer cleanup.\n- Identity anchor is restored after the main Qwen edit to reduce face drift.\n- If the subject is not a human face, bypass the Face Guard nodes.\n"
+        "Qwen Image Edit 2511 — Multi-Image + Optional LoRA Stack\n\nRequired: Lightning 4-step is always enabled.\nOptional LoRAs are installed as separate chained nodes and start in BYPASS mode.\nEnable only the LoRA(s) you need and tune each strength independently.\n\nOptional chain: Ultra Portrait → Hyper Portrait → Anything2Real → SexGod → MCNL-NSFW-v1 → Custom.\n\nProduction Face Guard v7:\n- ReActor is the final identity restore stage.\n- Generic FaceDetailer was intentionally removed from the default chain because it is not a dependable Qwen Image Edit identity-preserving pass.\n"
       ],
       "title": "Qwen 2511 — Multi-Image + Optional LoRA Stack"
     },
@@ -48,7 +48,7 @@
           "type": "IMAGE",
           "links": [
             1,
-            40
+            33
           ]
         },
         {
@@ -167,8 +167,7 @@
           "type": "CLIP",
           "links": [
             3,
-            4,
-            33
+            4
           ]
         }
       ],
@@ -211,8 +210,7 @@
             5,
             6,
             7,
-            8,
-            34
+            8
           ]
         }
       ],
@@ -420,8 +418,7 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            25,
-            35
+            25
           ]
         }
       ],
@@ -460,8 +457,7 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            26,
-            36
+            26
           ]
         }
       ],
@@ -588,8 +584,7 @@
         "cnr_id": "comfy-core"
       },
       "widgets_values": [
-        1,
-        false
+        1
       ]
     },
     {
@@ -894,8 +889,7 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            24,
-            32
+            24
           ]
         }
       ],
@@ -999,7 +993,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            39
+            32
           ]
         }
       ],
@@ -1027,7 +1021,7 @@
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 43
+          "link": 34
         }
       ],
       "outputs": [
@@ -1092,225 +1086,51 @@
       ]
     },
     {
-      "type": "MarkdownNote",
-      "pos": [
-        2400,
-        30
-      ],
-      "size": {
-        "0": 420,
-        "1": 220
-      },
-      "flags": {},
-      "order": 33,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "properties": {
-        "Node name for S&R": "MarkdownNote"
-      },
-      "title": "Face Guard v6 — ReActor + FaceDetailer",
-      "widgets_values": [
-        "Face Guard v6 — Real face-preservation stack\n\nActive branch added to this workflow:\nQwen output → ReActor face restore → FaceDetailer cleanup → SaveImage\n\nIdentity anchor for this workflow: Image 1.\nUse this branch when you are editing a human subject and want stronger face consistency.\nIf this workflow is used for a non-human image or no face is present, you can bypass ReActor and/or FaceDetailer in ComfyUI.\n\nInstalled helper nodes required:\n- ComfyUI-ReActor\n- ComfyUI-Impact-Pack\n- ComfyUI-Impact-Subpack (for UltralyticsDetectorProvider)\n"
-      ],
-      "id": 102
-    },
-    {
-      "type": "ToBasicPipe",
-      "pos": [
-        2400,
-        210
-      ],
-      "size": {
-        "0": 242,
-        "1": 106
-      },
-      "flags": {},
-      "order": 34,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 32
-        },
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 33
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 34,
-          "slot_index": 2
-        },
-        {
-          "name": "positive",
-          "type": "CONDITIONING",
-          "link": 35
-        },
-        {
-          "name": "negative",
-          "type": "CONDITIONING",
-          "link": 36
-        }
-      ],
-      "outputs": [
-        {
-          "name": "basic_pipe",
-          "type": "BASIC_PIPE",
-          "links": [
-            37
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "ToBasicPipe"
-      },
-      "title": "Face Guard — build basic pipe",
-      "id": 103
-    },
-    {
-      "type": "UltralyticsDetectorProvider",
-      "pos": [
-        2400,
-        360
-      ],
-      "size": {
-        "0": 315,
-        "1": 78
-      },
-      "flags": {},
-      "order": 35,
-      "mode": 0,
-      "outputs": [
-        {
-          "name": "BBOX_DETECTOR",
-          "type": "BBOX_DETECTOR",
-          "links": [
-            38
-          ],
-          "shape": 3
-        },
-        {
-          "name": "SEGM_DETECTOR",
-          "type": "SEGM_DETECTOR",
-          "links": null,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "UltralyticsDetectorProvider"
-      },
-      "title": "Face Guard — face detector",
-      "widgets_values": [
-        "bbox/face_yolov8m.pt"
-      ],
-      "id": 104
-    },
-    {
-      "type": "BasicPipeToDetailerPipe",
-      "pos": [
-        2720,
-        310
-      ],
-      "size": {
-        "0": 400,
-        "1": 204
-      },
-      "flags": {},
-      "order": 36,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "basic_pipe",
-          "type": "BASIC_PIPE",
-          "link": 37
-        },
-        {
-          "name": "bbox_detector",
-          "type": "BBOX_DETECTOR",
-          "link": 38
-        },
-        {
-          "name": "sam_model_opt",
-          "type": "SAM_MODEL",
-          "link": null,
-          "slot_index": 3
-        },
-        {
-          "name": "segm_detector_opt",
-          "type": "SEGM_DETECTOR",
-          "link": null,
-          "slot_index": 4
-        },
-        {
-          "name": "detailer_hook",
-          "type": "DETAILER_HOOK",
-          "link": null,
-          "slot_index": 5
-        }
-      ],
-      "outputs": [
-        {
-          "name": "detailer_pipe",
-          "type": "DETAILER_PIPE",
-          "links": [
-            42
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "BasicPipeToDetailerPipe"
-      },
-      "title": "Face Guard — detailer pipe",
-      "widgets_values": [
-        "",
-        "Select the LoRA to add to the text"
-      ],
-      "id": 105
-    },
-    {
+      "id": 102,
       "type": "ReActorFaceSwap",
       "pos": [
-        3180,
-        200
+        2350,
+        180
       ],
-      "size": {
-        "0": 315,
-        "1": 290
-      },
+      "size": [
+        350,
+        380
+      ],
       "flags": {},
-      "order": 37,
-      "mode": 0,
+      "order": 33,
+      "mode": 4,
       "inputs": [
         {
           "name": "input_image",
           "type": "IMAGE",
-          "link": 39
+          "link": 32
         },
         {
           "name": "source_image",
           "type": "IMAGE",
-          "link": 40
+          "shape": 7,
+          "link": 33
         },
         {
           "name": "face_model",
           "type": "FACE_MODEL",
+          "shape": 7,
+          "link": null
+        },
+        {
+          "name": "face_boost",
+          "type": "FACE_BOOST",
+          "shape": 7,
           "link": null
         }
       ],
       "outputs": [
         {
-          "name": "IMAGE",
+          "name": "SWAPPED_IMAGE",
           "type": "IMAGE",
           "links": [
-            41
+            34,
+            35
           ],
           "shape": 3,
           "slot_index": 0
@@ -1319,154 +1139,85 @@
           "name": "FACE_MODEL",
           "type": "FACE_MODEL",
           "links": null,
-          "shape": 3
+          "shape": 3,
+          "slot_index": 1
+        },
+        {
+          "name": "ORIGINAL_IMAGE",
+          "type": "IMAGE",
+          "links": null,
+          "shape": 3,
+          "slot_index": 2
         }
       ],
       "properties": {
-        "Node name for S&R": "ReActorFaceSwap"
+        "Node name for S&R": "ReActorFaceSwap",
+        "cnr_id": "comfyui-reactor"
       },
-      "title": "Face Guard — ReActor face restore",
+      "title": "Face Guard — ReActor identity restore — BYPASSED by default",
       "widgets_values": [
         true,
         "inswapper_128.onnx",
         "retinaface_resnet50",
         "none",
+        1.0,
+        0.5,
         "no",
         "no",
         "0",
         "0",
         1
-      ],
-      "id": 106
+      ]
     },
     {
-      "type": "FaceDetailerPipe",
-      "pos": [
-        3550,
-        175
-      ],
-      "size": {
-        "0": 456,
-        "1": 902
-      },
-      "flags": {},
-      "order": 38,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 41,
-          "slot_index": 0
-        },
-        {
-          "name": "detailer_pipe",
-          "type": "DETAILER_PIPE",
-          "link": 42
-        }
-      ],
-      "outputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "links": [
-            43,
-            44
-          ],
-          "shape": 3,
-          "slot_index": 0
-        },
-        {
-          "name": "cropped_refined",
-          "type": "IMAGE",
-          "links": [],
-          "shape": 6,
-          "slot_index": 1
-        },
-        {
-          "name": "cropped_enhanced_alpha",
-          "type": "IMAGE",
-          "links": [],
-          "shape": 6,
-          "slot_index": 2
-        },
-        {
-          "name": "mask",
-          "type": "MASK",
-          "links": null,
-          "shape": 3
-        },
-        {
-          "name": "detailer_pipe",
-          "type": "DETAILER_PIPE",
-          "links": null,
-          "shape": 3,
-          "slot_index": 4
-        },
-        {
-          "name": "cnet_images",
-          "type": "IMAGE",
-          "links": null,
-          "shape": 6
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "FaceDetailerPipe"
-      },
-      "title": "Face Guard — FaceDetailer cleanup",
-      "widgets_values": [
-        1024,
-        false,
-        768,
-        104033248204033,
-        "fixed",
-        24,
-        7,
-        "euler",
-        "normal",
-        0.35,
-        5,
-        true,
-        true,
-        0.6,
-        30,
-        3,
-        "center-1",
-        30,
-        0.93,
-        0,
-        0.7,
-        "False",
-        10,
-        0.1
-      ],
-      "id": 107
-    },
-    {
+      "id": 103,
       "type": "PreviewImage",
       "pos": [
-        4040,
-        250
+        2780,
+        200
       ],
-      "size": {
-        "0": 210,
-        "1": 246
-      },
+      "size": [
+        260,
+        300
+      ],
       "flags": {},
-      "order": 39,
+      "order": 34,
       "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 44
+          "link": 35
         }
       ],
+      "outputs": [],
       "properties": {
         "Node name for S&R": "PreviewImage"
       },
-      "title": "Preview — Face Guard final",
-      "id": 108
+      "title": "Preview — final output",
+      "widgets_values": []
+    },
+    {
+      "id": 104,
+      "type": "MarkdownNote",
+      "pos": [
+        2350,
+        -80
+      ],
+      "size": [
+        690,
+        230
+      ],
+      "flags": {},
+      "order": 35,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "title": "Production Face Guard v7 — Read Me",
+      "widgets_values": [
+        "Production Face Guard v7\n\nThis workflow uses ReActor as the final identity-restoration stage.\nWhy no generic FaceDetailer in the default path: standard Impact-Pack FaceDetailer is not a reliable identity-preserving refinement stage for Qwen Image Edit models and can regenerate a different face.\n\nIdentity source: Image 1.\nReActor is present but BYPASSED by default because this workflow may be used on non-human images. Enable it when the target is a human face.\n"
+      ]
     }
   ],
   "links": [
@@ -1704,105 +1455,33 @@
     ],
     [
       32,
-      25,
+      15,
       0,
-      103,
+      102,
       0,
-      "MODEL"
+      "IMAGE"
     ],
     [
       33,
-      3,
-      0,
-      103,
       1,
-      "CLIP"
+      0,
+      102,
+      1,
+      "IMAGE"
     ],
     [
       34,
-      4,
-      0,
-      103,
-      2,
-      "VAE"
-    ],
-    [
-      35,
-      8,
-      0,
-      103,
-      3,
-      "CONDITIONING"
-    ],
-    [
-      36,
-      9,
-      0,
-      103,
-      4,
-      "CONDITIONING"
-    ],
-    [
-      37,
-      103,
-      0,
-      105,
-      0,
-      "BASIC_PIPE"
-    ],
-    [
-      38,
-      104,
-      0,
-      105,
-      1,
-      "BBOX_DETECTOR"
-    ],
-    [
-      39,
-      15,
-      0,
-      106,
-      0,
-      "IMAGE"
-    ],
-    [
-      40,
-      1,
-      0,
-      106,
-      1,
-      "IMAGE"
-    ],
-    [
-      41,
-      106,
-      0,
-      107,
-      0,
-      "IMAGE"
-    ],
-    [
-      42,
-      105,
-      0,
-      107,
-      1,
-      "DETAILER_PIPE"
-    ],
-    [
-      43,
-      107,
+      102,
       0,
       16,
       0,
       "IMAGE"
     ],
     [
-      44,
-      107,
+      35,
+      102,
       0,
-      108,
+      103,
       0,
       "IMAGE"
     ]

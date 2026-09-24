@@ -1,9 +1,3 @@
-## Face Guard v6
-
-All active workflows now include a stronger face-preservation branch for human subjects:
-`Qwen output → ReActor face restore → FaceDetailer cleanup → SaveImage`.
-If no human face is present, bypass the Face Guard nodes.
-
 # Workflow Catalog
 
 The workflow filenames are intentionally numbered so related workflows remain grouped in ComfyUI.

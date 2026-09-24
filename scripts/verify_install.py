@@ -1,9 +1,18 @@
 #!/usr/bin/env python3
-import argparse, json
+import argparse, hashlib, json
 from pathlib import Path
 
 def load(path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
+
+def sha256_file(path, chunk=8*1024*1024):
+    h=hashlib.sha256()
+    with Path(path).open("rb") as f:
+        while True:
+            b=f.read(chunk)
+            if not b: break
+            h.update(b)
+    return h.hexdigest()
 
 def main():
     ap = argparse.ArgumentParser()
@@ -53,6 +62,17 @@ def main():
         print(symbol, item["id"], p)
         if not good:
             (required_failures if item.get("required", False) else warnings).append(f"node:{item['id']}")
+        if good:
+            for asset in item.get("required_assets", []):
+                apath = comfy / asset["path"]
+                amin = int(asset.get("min_size", 1))
+                agood = apath.exists() and apath.stat().st_size >= amin
+                expected = asset.get("sha256")
+                if agood and expected:
+                    agood = sha256_file(apath).lower() == expected.lower()
+                print(("✓" if agood else "✗"), f"asset:{item['id']}", apath)
+                if not agood:
+                    (required_failures if item.get("required", False) else warnings).append(f"asset:{item['id']}:{asset['path']}")
 
     print("\n=== FINAL VERIFICATION ===")
     if warnings:

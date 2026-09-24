@@ -1,21 +1,23 @@
 # Changelog
 
-## Face Guard v6
+## Production v8
 
-### Added
-- Added a real post-process identity-preservation branch to all workflow JSON files.
-- Added `ReActorFaceSwap` after the main Qwen decode stage.
-- Added `UltralyticsDetectorProvider`, `ToBasicPipe`, `BasicPipeToDetailerPipe`, and `FaceDetailerPipe` nodes to build an active face cleanup stack.
-- Added final preview nodes for the Face Guard output.
+### Fixed
+- Removed all Impact FaceDetailer node references (`ToBasicPipe`, `BasicPipeToDetailerPipe`, `FaceDetailerPipe`, `UltralyticsDetectorProvider`) from production workflows.
+- Pinned ReActor to `a12c5b19dcac9ae8b47e592da39c9711c8f8c756` to prevent future node-schema drift.
+- Runs official ReActor `install.py` and verifies the required swap model.
+- Added fallback download + SHA256 verification for `inswapper_128.onnx`.
+- Added runtime import/registration verification for `ReActorFaceSwap`; a broken custom-node import can no longer be reported as a healthy install.
+- Removed forced `tf-keras` installation because it is not part of ReActor's official requirements and unnecessarily injects TensorFlow into the ComfyUI environment.
 
-### Changed
-- Rewired workflow outputs so `SaveImage` now saves the Face Guard final image by default.
-- Expanded `impact-pack`, `impact-subpack`, and `reactor` usage across the full workflow library.
-- Added `tf-keras` as an extra pip dependency for ReActor compatibility.
-- Updated identity-preservation documentation and README notes to reflect the active stack.
+## Production v7
 
-### Notes
-- If a workflow is used for non-human images, the Face Guard nodes can be bypassed inside ComfyUI.
+- Rebuilt Face Guard around current ReActor schema and official installer.
+- Removed generic FaceDetailer from the default Qwen edit output chain.
+- Fixed Prompt Guard serialization/order for current ComfyUI core nodes.
+- Added ComfyUI compatibility preflight and required-asset verification.
+- Marked active default LoRA dependencies correctly.
+- Made unused custom-node packs opt-in.
 
 ## Unreleased
 
