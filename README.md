@@ -158,3 +158,19 @@ curl -fsSL https://raw.githubusercontent.com/ImanNasrEsfahani/qwen-vast-recovery
 ```
 
 `vast-start.sh` runs installation only when the installed version marker differs, then starts the template's normal `entrypoint.sh`. See [Vast.ai setup](docs/VAST_AI.md).
+
+
+## Vast.ai startup behavior — v8.2
+
+`vast-start.sh` starts the original Vast `entrypoint.sh` immediately and
+runs QVR installation in the background. This keeps Open / Jupyter / ComfyUI
+accessible while models and dependencies download.
+
+After the first successful installation, restart the Vast instance once so
+ComfyUI loads ReActor/custom nodes.
+
+Monitor installation with:
+
+```bash
+tail -f /workspace/.qvr-install-background.log
+```

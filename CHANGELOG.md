@@ -1,5 +1,18 @@
 # Changelog
 
+
+## 8.2.0
+
+### Fixed
+- Fixed Vast.ai Open/Jupyter/ComfyUI being unavailable while QVR installed.
+- `vast-start.sh` now launches the original Vast `entrypoint.sh` immediately.
+- QVR installation now runs in the background.
+- Added `/workspace/.qvr-install-background.log`.
+- Added `/workspace/.qvr-restart-required`.
+- On the next restart, installation is skipped and the restart marker is cleared.
+- Documented emergency recovery by temporarily restoring `entrypoint.sh`.
+
+
 ## Production v8.1 (8.1.0)
 
 ### Added
