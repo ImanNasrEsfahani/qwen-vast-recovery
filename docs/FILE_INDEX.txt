@@ -3,6 +3,7 @@
 .gitignore
 CHANGELOG.md
 README.md
+VERSION
 bootstrap.sh
 docs/ADDING_WORKFLOWS.md
 docs/ARCHITECTURE.md
@@ -15,6 +16,7 @@ docs/PRODUCTION_AUDIT.md
 docs/PRODUCTION_V8.md
 docs/PROMPT_GUARD.md
 docs/TROUBLESHOOTING.md
+docs/VAST_AI.md
 docs/WORKFLOWS.md
 manifests/custom-nodes.json
 manifests/models.json
@@ -30,6 +32,8 @@ scripts/migrate_from_v6.sh
 scripts/validate_repo.py
 scripts/verify_custom_nodes_runtime.py
 scripts/verify_install.py
+vast-on-start.txt
+vast-start.sh
 workflows/editing/20-material-replacement.json
 workflows/editing/21-relighting.json
 workflows/editing/22-restoration-unblur.json

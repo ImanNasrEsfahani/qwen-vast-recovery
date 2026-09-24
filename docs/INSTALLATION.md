@@ -43,3 +43,14 @@ From a cloned repository:
 ```bash
 python scripts/verify_install.py   --models manifests/models.json   --workflows manifests/workflows.json   --custom-nodes manifests/custom-nodes.json   --comfy /workspace/ComfyUI
 ```
+
+
+## Vast.ai template automatic startup
+
+For version 8.1.0, use this as the template **On-start Script**:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ImanNasrEsfahani/qwen-vast-recovery/main/vast-start.sh | bash
+```
+
+The script handles the version marker and calls the original `entrypoint.sh` itself.

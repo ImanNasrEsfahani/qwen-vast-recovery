@@ -147,3 +147,14 @@ The installer also checks that the installed ComfyUI contains the required nativ
 v8 removes Impact-Pack FaceDetailer nodes from every production workflow, pins ReActor to `a12c5b19dcac9ae8b47e592da39c9711c8f8c756`, runs its official installer, hash-verifies `inswapper_128.onnx`, and performs a real Python import/registration probe before reporting installation success.
 
 See [Production v8](docs/PRODUCTION_V8.md).
+
+
+## Vast.ai automatic startup (8.1.0)
+
+For a Vast.ai template, put this single line in **On-start Script**:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ImanNasrEsfahani/qwen-vast-recovery/main/vast-start.sh | bash
+```
+
+`vast-start.sh` runs installation only when the installed version marker differs, then starts the template's normal `entrypoint.sh`. See [Vast.ai setup](docs/VAST_AI.md).

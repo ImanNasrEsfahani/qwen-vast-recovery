@@ -15,7 +15,10 @@ command -v git >/dev/null 2>&1 || {
 }
 
 TMP="$(mktemp -d)"
-trap 'rm -rf "$TMP"' EXIT
+cleanup(){ rm -rf "$TMP"; }
+trap cleanup EXIT
 
 git clone --depth 1 --branch "$BRANCH" "https://github.com/$REPO.git" "$TMP/repo"
-exec bash "$TMP/repo/scripts/install.sh" "$@"
+
+# Do not exec here: returning to this shell lets the EXIT trap clean the temporary clone.
+bash "$TMP/repo/scripts/install.sh" "$@"

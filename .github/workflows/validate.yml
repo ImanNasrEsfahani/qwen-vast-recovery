@@ -19,5 +19,6 @@ jobs:
       - name: Check shell syntax
         run: |
           bash -n bootstrap.sh
+          bash -n vast-start.sh
           bash -n scripts/install.sh
           bash -n scripts/install_lora.sh

@@ -1,5 +1,19 @@
 # Changelog
 
+## Production v8.1 (8.1.0)
+
+### Added
+- Added `vast-start.sh` for Vast.ai On-start Script automation.
+- Added persistent version marker `/workspace/.qvr-version`.
+- Added failed-install marker `/workspace/.qvr-install-failed`.
+- Added `VERSION`, `vast-on-start.txt`, and `docs/VAST_AI.md`.
+
+### Reliability
+- Vast startup only writes the success marker after the installer returns success.
+- Failed installation still starts the original template entrypoint so the instance remains accessible for diagnostics.
+- Fixed remote `bootstrap.sh` temporary clone cleanup by returning before the EXIT trap.
+- GitHub Actions now checks `vast-start.sh` shell syntax.
+
 ## Production v8
 
 ### Fixed
