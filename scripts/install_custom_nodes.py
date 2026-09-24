@@ -33,6 +33,12 @@ def install_one(item, custom_root: Path):
         if rc != 0:
             raise RuntimeError("install.py failed")
 
+    extra_pip_packages = item.get("extra_pip_packages", [])
+    if extra_pip_packages:
+        rc = run([sys.executable,"-m","pip","install",*extra_pip_packages]).returncode
+        if rc != 0:
+            raise RuntimeError("extra pip package installation failed")
+
 def install_items(data, comfy: Path):
     custom_root = comfy / "custom_nodes"
     custom_root.mkdir(parents=True, exist_ok=True)

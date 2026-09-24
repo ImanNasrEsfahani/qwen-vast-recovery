@@ -1,6 +1,6 @@
 {
-  "last_node_id": 107,
-  "last_link_id": 34,
+  "last_node_id": 114,
+  "last_link_id": 47,
   "nodes": [
     {
       "id": 100,
@@ -23,7 +23,7 @@
         "cnr_id": "comfy-core"
       },
       "widgets_values": [
-        "Purpose:\n- Configurable image enlargement / upscaling workflow for Qwen Image Edit 2511.\n- Designed for 2K, 4K, or 8K targets by manually changing width and height in the ImageScale node.\n\nInputs:\n- Image 1 = source image.\n\nHow it works:\n- The ImageScale node sets the target output width/height first.\n- Qwen then edits/refines the enlarged image at that chosen size.\n- Unblur / Upscale LoRA is ON by default to help restore clarity and detail.\n\nStarter prompt idea:\n- \"Upscale this image to the chosen output resolution. Preserve the subject, identity, composition, and colors. Recover natural detail, reduce blur and compression artifacts, and keep the result clean and realistic.\"\n\nSuggested target sizes:\n- 2K landscape: 2048 x 1152\n- 2K portrait: 1152 x 2048\n- 2K square: 2048 x 2048\n- 4K UHD landscape: 3840 x 2160\n- 4K portrait: 2160 x 3840\n- 4K square: 4096 x 4096\n- 8K UHD landscape: 7680 x 4320\n- 8K portrait: 4320 x 7680\n- 8K square: 8192 x 8192\n\nImportant runtime notes:\n- 8K can require very high VRAM and may fail on smaller GPUs.\n- If 8K is too heavy, try 2K or 4K first, then upscale again in a second pass.\n- You can bypass Lightning and increase sampler steps for slower experiments, but the default setup is optimized for fast iteration.\n\n----------------------------------------------------------------\nIdentity Preservation Rules:\n- The main person's face identity must stay stable.\n- Keep face shape, eye spacing, nose shape, mouth shape, skin characteristics, and recognizable appearance.\n- If multiple reference images are used, they may influence clothing, pose, lighting, background, or materials — not identity, unless explicitly designated as the identity reference.\n- For edits that do not require face changes, prefer keeping the face untouched or minimally changed.\n- If identity drift happens in practice, recommended recovery stack:\n  1) make Image 1 the identity anchor,\n  2) keep the prompt explicit about preserving identity,\n  3) use local/cropped editing for non-face changes,\n  4) use ReActor as a final face restore/fallback pass,\n  5) optionally use FaceDetailer with low denoise for face cleanup only.\n- Restoration/upscale should improve detail without changing the person's identity.\n\nPrompt Guard Upgrade:\n- The positive prompt is now split into:\n  1) SYSTEM PROMPT — protected identity-preserving rules\n  2) USER PROMPT — the part you edit\n- The negative prompt is also split into:\n  1) SYSTEM NEGATIVE — protected anti-drift / anti-face-mismatch rules\n  2) USER NEGATIVE — optional extra negatives\n- This prevents accidental deletion of the identity-preservation logic during normal use."
+        "Purpose:\n- Configurable image enlargement / upscaling workflow for Qwen Image Edit 2511.\n- Designed for 2K, 4K, or 8K targets by manually changing width and height in the ImageScale node.\n\nInputs:\n- Image 1 = source image.\n\nHow it works:\n- The ImageScale node sets the target output width/height first.\n- Qwen then edits/refines the enlarged image at that chosen size.\n- Unblur / Upscale LoRA is ON by default to help restore clarity and detail.\n\nStarter prompt idea:\n- \"Upscale this image to the chosen output resolution. Preserve the subject, identity, composition, and colors. Recover natural detail, reduce blur and compression artifacts, and keep the result clean and realistic.\"\n\nSuggested target sizes:\n- 2K landscape: 2048 x 1152\n- 2K portrait: 1152 x 2048\n- 2K square: 2048 x 2048\n- 4K UHD landscape: 3840 x 2160\n- 4K portrait: 2160 x 3840\n- 4K square: 4096 x 4096\n- 8K UHD landscape: 7680 x 4320\n- 8K portrait: 4320 x 7680\n- 8K square: 8192 x 8192\n\nImportant runtime notes:\n- 8K can require very high VRAM and may fail on smaller GPUs.\n- If 8K is too heavy, try 2K or 4K first, then upscale again in a second pass.\n- You can bypass Lightning and increase sampler steps for slower experiments, but the default setup is optimized for fast iteration.\n\n----------------------------------------------------------------\nIdentity Preservation Rules:\n- The main person's face identity must stay stable.\n- Keep face shape, eye spacing, nose shape, mouth shape, skin characteristics, and recognizable appearance.\n- If multiple reference images are used, they may influence clothing, pose, lighting, background, or materials — not identity, unless explicitly designated as the identity reference.\n- For edits that do not require face changes, prefer keeping the face untouched or minimally changed.\n- If identity drift happens in practice, recommended recovery stack:\n  1) make Image 1 the identity anchor,\n  2) keep the prompt explicit about preserving identity,\n  3) use local/cropped editing for non-face changes,\n  4) use ReActor as a final face restore/fallback pass,\n  5) optionally use FaceDetailer with low denoise for face cleanup only.\n- Restoration/upscale should improve detail without changing the person's identity.\n\nPrompt Guard Upgrade:\n- The positive prompt is now split into:\n  1) SYSTEM PROMPT — protected identity-preserving rules\n  2) USER PROMPT — the part you edit\n- The negative prompt is also split into:\n  1) SYSTEM NEGATIVE — protected anti-drift / anti-face-mismatch rules\n  2) USER NEGATIVE — optional extra negatives\n- This prevents accidental deletion of the identity-preservation logic during normal use.\n\nFace Guard v6:\n- This workflow now includes an active post-process identity branch: ReActor face restore + FaceDetailer cleanup.\n- Identity anchor is restored after the main Qwen edit to reduce face drift.\n- If the subject is not a human face, bypass the Face Guard nodes.\n"
       ],
       "title": "23 — Configurable Upscale 2K / 4K / 8K — Guide & Prompt",
       "color": "#222",
@@ -49,7 +49,8 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            1
+            1,
+            43
           ]
         },
         {
@@ -172,7 +173,8 @@
           "type": "CLIP",
           "links": [
             3,
-            4
+            4,
+            36
           ]
         }
       ],
@@ -215,7 +217,8 @@
             5,
             6,
             7,
-            8
+            8,
+            37
           ]
         }
       ],
@@ -395,7 +398,8 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            24
+            24,
+            38
           ]
         }
       ],
@@ -434,7 +438,8 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            25
+            25,
+            39
           ]
         }
       ],
@@ -913,7 +918,8 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            23
+            23,
+            35
           ]
         }
       ],
@@ -1017,7 +1023,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            28
+            42
           ]
         }
       ],
@@ -1045,7 +1051,7 @@
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 28
+          "link": 46
         }
       ],
       "outputs": [
@@ -1302,6 +1308,383 @@
       },
       "title": "FINAL NEGATIVE PROMPT",
       "widgets_values": []
+    },
+    {
+      "type": "MarkdownNote",
+      "pos": [
+        2400,
+        30
+      ],
+      "size": {
+        "0": 420,
+        "1": 220
+      },
+      "flags": {},
+      "order": 43,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "MarkdownNote"
+      },
+      "title": "Face Guard v6 — ReActor + FaceDetailer",
+      "widgets_values": [
+        "Face Guard v6 — Real face-preservation stack\n\nActive branch added to this workflow:\nQwen output → ReActor face restore → FaceDetailer cleanup → SaveImage\n\nIdentity anchor for this workflow: Image 1.\nUse this branch when you are editing a human subject and want stronger face consistency.\nIf this workflow is used for a non-human image or no face is present, you can bypass ReActor and/or FaceDetailer in ComfyUI.\n\nInstalled helper nodes required:\n- ComfyUI-ReActor\n- ComfyUI-Impact-Pack\n- ComfyUI-Impact-Subpack (for UltralyticsDetectorProvider)\n"
+      ],
+      "id": 108
+    },
+    {
+      "type": "ToBasicPipe",
+      "pos": [
+        2400,
+        210
+      ],
+      "size": {
+        "0": 242,
+        "1": 106
+      },
+      "flags": {},
+      "order": 44,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 35
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 36
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 37,
+          "slot_index": 2
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 38
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 39
+        }
+      ],
+      "outputs": [
+        {
+          "name": "basic_pipe",
+          "type": "BASIC_PIPE",
+          "links": [
+            40
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ToBasicPipe"
+      },
+      "title": "Face Guard — build basic pipe",
+      "id": 109
+    },
+    {
+      "type": "UltralyticsDetectorProvider",
+      "pos": [
+        2400,
+        360
+      ],
+      "size": {
+        "0": 315,
+        "1": 78
+      },
+      "flags": {},
+      "order": 45,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "BBOX_DETECTOR",
+          "type": "BBOX_DETECTOR",
+          "links": [
+            41
+          ],
+          "shape": 3
+        },
+        {
+          "name": "SEGM_DETECTOR",
+          "type": "SEGM_DETECTOR",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UltralyticsDetectorProvider"
+      },
+      "title": "Face Guard — face detector",
+      "widgets_values": [
+        "bbox/face_yolov8m.pt"
+      ],
+      "id": 110
+    },
+    {
+      "type": "BasicPipeToDetailerPipe",
+      "pos": [
+        2720,
+        310
+      ],
+      "size": {
+        "0": 400,
+        "1": 204
+      },
+      "flags": {},
+      "order": 46,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "basic_pipe",
+          "type": "BASIC_PIPE",
+          "link": 40
+        },
+        {
+          "name": "bbox_detector",
+          "type": "BBOX_DETECTOR",
+          "link": 41
+        },
+        {
+          "name": "sam_model_opt",
+          "type": "SAM_MODEL",
+          "link": null,
+          "slot_index": 3
+        },
+        {
+          "name": "segm_detector_opt",
+          "type": "SEGM_DETECTOR",
+          "link": null,
+          "slot_index": 4
+        },
+        {
+          "name": "detailer_hook",
+          "type": "DETAILER_HOOK",
+          "link": null,
+          "slot_index": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "detailer_pipe",
+          "type": "DETAILER_PIPE",
+          "links": [
+            45
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BasicPipeToDetailerPipe"
+      },
+      "title": "Face Guard — detailer pipe",
+      "widgets_values": [
+        "",
+        "Select the LoRA to add to the text"
+      ],
+      "id": 111
+    },
+    {
+      "type": "ReActorFaceSwap",
+      "pos": [
+        3180,
+        200
+      ],
+      "size": {
+        "0": 315,
+        "1": 290
+      },
+      "flags": {},
+      "order": 47,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "input_image",
+          "type": "IMAGE",
+          "link": 42
+        },
+        {
+          "name": "source_image",
+          "type": "IMAGE",
+          "link": 43
+        },
+        {
+          "name": "face_model",
+          "type": "FACE_MODEL",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            44
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "FACE_MODEL",
+          "type": "FACE_MODEL",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ReActorFaceSwap"
+      },
+      "title": "Face Guard — ReActor face restore",
+      "widgets_values": [
+        true,
+        "inswapper_128.onnx",
+        "retinaface_resnet50",
+        "none",
+        "no",
+        "no",
+        "0",
+        "0",
+        1
+      ],
+      "id": 112
+    },
+    {
+      "type": "FaceDetailerPipe",
+      "pos": [
+        3550,
+        175
+      ],
+      "size": {
+        "0": 456,
+        "1": 902
+      },
+      "flags": {},
+      "order": 48,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 44,
+          "slot_index": 0
+        },
+        {
+          "name": "detailer_pipe",
+          "type": "DETAILER_PIPE",
+          "link": 45
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            46,
+            47
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "cropped_refined",
+          "type": "IMAGE",
+          "links": [],
+          "shape": 6,
+          "slot_index": 1
+        },
+        {
+          "name": "cropped_enhanced_alpha",
+          "type": "IMAGE",
+          "links": [],
+          "shape": 6,
+          "slot_index": 2
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        },
+        {
+          "name": "detailer_pipe",
+          "type": "DETAILER_PIPE",
+          "links": null,
+          "shape": 3,
+          "slot_index": 4
+        },
+        {
+          "name": "cnet_images",
+          "type": "IMAGE",
+          "links": null,
+          "shape": 6
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FaceDetailerPipe"
+      },
+      "title": "Face Guard — FaceDetailer cleanup",
+      "widgets_values": [
+        1024,
+        false,
+        768,
+        104033248204033,
+        "fixed",
+        24,
+        7,
+        "euler",
+        "normal",
+        0.35,
+        5,
+        true,
+        true,
+        0.6,
+        30,
+        3,
+        "center-1",
+        30,
+        0.93,
+        0,
+        0.7,
+        "False",
+        10,
+        0.1
+      ],
+      "id": 113
+    },
+    {
+      "type": "PreviewImage",
+      "pos": [
+        4040,
+        250
+      ],
+      "size": {
+        "0": 210,
+        "1": 246
+      },
+      "flags": {},
+      "order": 49,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 47
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "title": "Preview — Face Guard final",
+      "id": 114
     }
   ],
   "links": [
@@ -1522,14 +1905,6 @@
       "LATENT"
     ],
     [
-      28,
-      91,
-      0,
-      92,
-      0,
-      "IMAGE"
-    ],
-    [
       29,
       101,
       0,
@@ -1576,6 +1951,110 @@
       31,
       0,
       "STRING"
+    ],
+    [
+      35,
+      56,
+      0,
+      109,
+      0,
+      "MODEL"
+    ],
+    [
+      36,
+      41,
+      0,
+      109,
+      1,
+      "CLIP"
+    ],
+    [
+      37,
+      42,
+      0,
+      109,
+      2,
+      "VAE"
+    ],
+    [
+      38,
+      32,
+      0,
+      109,
+      3,
+      "CONDITIONING"
+    ],
+    [
+      39,
+      33,
+      0,
+      109,
+      4,
+      "CONDITIONING"
+    ],
+    [
+      40,
+      109,
+      0,
+      111,
+      0,
+      "BASIC_PIPE"
+    ],
+    [
+      41,
+      110,
+      0,
+      111,
+      1,
+      "BBOX_DETECTOR"
+    ],
+    [
+      42,
+      91,
+      0,
+      112,
+      0,
+      "IMAGE"
+    ],
+    [
+      43,
+      1,
+      0,
+      112,
+      1,
+      "IMAGE"
+    ],
+    [
+      44,
+      112,
+      0,
+      113,
+      0,
+      "IMAGE"
+    ],
+    [
+      45,
+      111,
+      0,
+      113,
+      1,
+      "DETAILER_PIPE"
+    ],
+    [
+      46,
+      113,
+      0,
+      92,
+      0,
+      "IMAGE"
+    ],
+    [
+      47,
+      113,
+      0,
+      114,
+      0,
+      "IMAGE"
     ]
   ],
   "groups": [],

@@ -1,5 +1,22 @@
 # Changelog
 
+## Face Guard v6
+
+### Added
+- Added a real post-process identity-preservation branch to all workflow JSON files.
+- Added `ReActorFaceSwap` after the main Qwen decode stage.
+- Added `UltralyticsDetectorProvider`, `ToBasicPipe`, `BasicPipeToDetailerPipe`, and `FaceDetailerPipe` nodes to build an active face cleanup stack.
+- Added final preview nodes for the Face Guard output.
+
+### Changed
+- Rewired workflow outputs so `SaveImage` now saves the Face Guard final image by default.
+- Expanded `impact-pack`, `impact-subpack`, and `reactor` usage across the full workflow library.
+- Added `tf-keras` as an extra pip dependency for ReActor compatibility.
+- Updated identity-preservation documentation and README notes to reflect the active stack.
+
+### Notes
+- If a workflow is used for non-human images, the Face Guard nodes can be bypassed inside ComfyUI.
+
 ## Unreleased
 
 ### Changed

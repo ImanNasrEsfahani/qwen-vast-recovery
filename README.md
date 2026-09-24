@@ -121,6 +121,14 @@ See:
 
 The installer also includes **ComfyUI-ReActor** as an optional custom-node dependency to support post-process face restoration when identity drift happens.
 
+As of **Face Guard v6**, the active workflows now include a real post-process branch for human subjects:
+
+- **Qwen output → ReActor face restore → FaceDetailer cleanup → SaveImage**
+- `Impact Pack` and `Impact Subpack` are now part of the recommended stack across the active library.
+- `tf-keras` is installed for better ReActor compatibility.
+
+If a workflow is used on a non-human image, the Face Guard nodes can be bypassed inside ComfyUI.
+
 
 ## Prompt Guard architecture
 
