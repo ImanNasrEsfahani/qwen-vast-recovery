@@ -37,3 +37,6 @@ Default rule:
 
 Exception:
 - `12-identity-lock.json` uses `Image 2 = identity anchor`.
+
+
+The workflows now use a split-prompt design with SYSTEM PROMPT / USER PROMPT and SYSTEM NEGATIVE / USER NEGATIVE.

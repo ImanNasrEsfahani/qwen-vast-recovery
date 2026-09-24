@@ -11,6 +11,7 @@ docs/IDENTITY_PRESERVATION.md
 docs/INSTALLATION.md
 docs/MIGRATION.md
 docs/MODELS.md
+docs/PROMPT_GUARD.md
 docs/TROUBLESHOOTING.md
 docs/WORKFLOWS.md
 manifests/custom-nodes.json

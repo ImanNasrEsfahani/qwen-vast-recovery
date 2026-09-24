@@ -120,3 +120,15 @@ See:
 - [Identity preservation](docs/IDENTITY_PRESERVATION.md)
 
 The installer also includes **ComfyUI-ReActor** as an optional custom-node dependency to support post-process face restoration when identity drift happens.
+
+
+## Prompt Guard architecture
+
+The active workflows now protect identity-preservation logic by splitting prompts into:
+
+- **SYSTEM PROMPT** — protected workflow-level rules (identity, role separation, stability)
+- **USER PROMPT** — the editable part for daily use
+- **SYSTEM NEGATIVE** — protected anti-drift rules
+- **USER NEGATIVE** — optional user negatives
+
+This prevents accidental deletion of core identity-preservation instructions when a user edits the prompt.

@@ -39,6 +39,16 @@ def validate_workflow(path: Path):
     if not notes:
         raise ValueError("missing MarkdownNote guide")
 
+    system_prompt_nodes = [n for n in data.get("nodes", []) if n.get("title") == "SYSTEM PROMPT — DO NOT EDIT"]
+    user_prompt_nodes = [n for n in data.get("nodes", []) if n.get("title") == "USER PROMPT — edit this"]
+    system_negative_nodes = [n for n in data.get("nodes", []) if n.get("title") == "SYSTEM NEGATIVE — DO NOT EDIT"]
+    user_negative_nodes = [n for n in data.get("nodes", []) if n.get("title") == "USER NEGATIVE — optional"]
+    if system_prompt_nodes and not user_prompt_nodes:
+        raise ValueError("missing USER PROMPT node")
+    if system_negative_nodes and not user_negative_nodes:
+        raise ValueError("missing USER NEGATIVE node")
+
+
 def main():
     errors = []
 

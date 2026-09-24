@@ -1,6 +1,6 @@
 {
-  "last_node_id": 100,
-  "last_link_id": 28,
+  "last_node_id": 107,
+  "last_link_id": 34,
   "nodes": [
     {
       "id": 100,
@@ -23,7 +23,7 @@
         "cnr_id": "comfy-core"
       },
       "widgets_values": [
-        "Purpose:\n- Configurable image enlargement / upscaling workflow for Qwen Image Edit 2511.\n- Designed for 2K, 4K, or 8K targets by manually changing width and height in the ImageScale node.\n\nInputs:\n- Image 1 = source image.\n\nHow it works:\n- The ImageScale node sets the target output width/height first.\n- Qwen then edits/refines the enlarged image at that chosen size.\n- Unblur / Upscale LoRA is ON by default to help restore clarity and detail.\n\nStarter prompt idea:\n- \"Upscale this image to the chosen output resolution. Preserve the subject, identity, composition, and colors. Recover natural detail, reduce blur and compression artifacts, and keep the result clean and realistic.\"\n\nSuggested target sizes:\n- 2K landscape: 2048 x 1152\n- 2K portrait: 1152 x 2048\n- 2K square: 2048 x 2048\n- 4K UHD landscape: 3840 x 2160\n- 4K portrait: 2160 x 3840\n- 4K square: 4096 x 4096\n- 8K UHD landscape: 7680 x 4320\n- 8K portrait: 4320 x 7680\n- 8K square: 8192 x 8192\n\nImportant runtime notes:\n- 8K can require very high VRAM and may fail on smaller GPUs.\n- If 8K is too heavy, try 2K or 4K first, then upscale again in a second pass.\n- You can bypass Lightning and increase sampler steps for slower experiments, but the default setup is optimized for fast iteration.\n\n----------------------------------------------------------------\nIdentity Preservation Rules:\n- The main person's face identity must stay stable.\n- Keep face shape, eye spacing, nose shape, mouth shape, skin characteristics, and recognizable appearance.\n- If multiple reference images are used, they may influence clothing, pose, lighting, background, or materials — not identity, unless explicitly designated as the identity reference.\n- For edits that do not require face changes, prefer keeping the face untouched or minimally changed.\n- If identity drift happens in practice, recommended recovery stack:\n  1) make Image 1 the identity anchor,\n  2) keep the prompt explicit about preserving identity,\n  3) use local/cropped editing for non-face changes,\n  4) use ReActor as a final face restore/fallback pass,\n  5) optionally use FaceDetailer with low denoise for face cleanup only.\n- Restoration/upscale should improve detail without changing the person's identity.\n"
+        "Purpose:\n- Configurable image enlargement / upscaling workflow for Qwen Image Edit 2511.\n- Designed for 2K, 4K, or 8K targets by manually changing width and height in the ImageScale node.\n\nInputs:\n- Image 1 = source image.\n\nHow it works:\n- The ImageScale node sets the target output width/height first.\n- Qwen then edits/refines the enlarged image at that chosen size.\n- Unblur / Upscale LoRA is ON by default to help restore clarity and detail.\n\nStarter prompt idea:\n- \"Upscale this image to the chosen output resolution. Preserve the subject, identity, composition, and colors. Recover natural detail, reduce blur and compression artifacts, and keep the result clean and realistic.\"\n\nSuggested target sizes:\n- 2K landscape: 2048 x 1152\n- 2K portrait: 1152 x 2048\n- 2K square: 2048 x 2048\n- 4K UHD landscape: 3840 x 2160\n- 4K portrait: 2160 x 3840\n- 4K square: 4096 x 4096\n- 8K UHD landscape: 7680 x 4320\n- 8K portrait: 4320 x 7680\n- 8K square: 8192 x 8192\n\nImportant runtime notes:\n- 8K can require very high VRAM and may fail on smaller GPUs.\n- If 8K is too heavy, try 2K or 4K first, then upscale again in a second pass.\n- You can bypass Lightning and increase sampler steps for slower experiments, but the default setup is optimized for fast iteration.\n\n----------------------------------------------------------------\nIdentity Preservation Rules:\n- The main person's face identity must stay stable.\n- Keep face shape, eye spacing, nose shape, mouth shape, skin characteristics, and recognizable appearance.\n- If multiple reference images are used, they may influence clothing, pose, lighting, background, or materials — not identity, unless explicitly designated as the identity reference.\n- For edits that do not require face changes, prefer keeping the face untouched or minimally changed.\n- If identity drift happens in practice, recommended recovery stack:\n  1) make Image 1 the identity anchor,\n  2) keep the prompt explicit about preserving identity,\n  3) use local/cropped editing for non-face changes,\n  4) use ReActor as a final face restore/fallback pass,\n  5) optionally use FaceDetailer with low denoise for face cleanup only.\n- Restoration/upscale should improve detail without changing the person's identity.\n\nPrompt Guard Upgrade:\n- The positive prompt is now split into:\n  1) SYSTEM PROMPT — protected identity-preserving rules\n  2) USER PROMPT — the part you edit\n- The negative prompt is also split into:\n  1) SYSTEM NEGATIVE — protected anti-drift / anti-face-mismatch rules\n  2) USER NEGATIVE — optional extra negatives\n- This prevents accidental deletion of the identity-preservation logic during normal use."
       ],
       "title": "23 — Configurable Upscale 2K / 4K / 8K — Guide & Prompt",
       "color": "#222",
@@ -249,6 +249,11 @@
       "mode": 0,
       "inputs": [
         {
+          "name": "prompt",
+          "type": "STRING",
+          "link": 31
+        },
+        {
           "name": "clip",
           "type": "CLIP",
           "link": 3
@@ -292,7 +297,7 @@
         "cnr_id": "comfy-core"
       },
       "widgets_values": [
-        "Highest priority: preserve the exact facial identity and recognizable appearance of the main person. Do not change face shape, eyes, nose, mouth, skin characteristics, hairstyle, or recognizable identity unless the instruction explicitly asks for it. Keep the result natural and coherent. Treat Image 1 as the identity anchor. All other reference images must influence clothing, pose, style, material, or lighting only, not the person's identity. Upscale this image to the chosen output resolution. Preserve the subject, identity, composition, and overall look. Recover missing detail, reduce blur and compression artifacts, improve clarity, and keep the result natural, clean, and realistic."
+        ""
       ],
       "title": "Positive Prompt"
     },
@@ -311,6 +316,11 @@
       "order": 14,
       "mode": 0,
       "inputs": [
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "link": 34
+        },
         {
           "name": "clip",
           "type": "CLIP",
@@ -355,7 +365,7 @@
         "cnr_id": "comfy-core"
       },
       "widgets_values": [
-        "blurry, low quality, noisy, distorted anatomy, identity drift, oversharpened halos, plastic skin, washed-out colors, duplicated details, extra limbs, text artifacts"
+        ""
       ],
       "title": "Negative Prompt"
     },
@@ -1052,6 +1062,246 @@
       "widgets_values": [
         "23_upscale_configurable"
       ]
+    },
+    {
+      "id": 107,
+      "type": "MarkdownNote",
+      "pos": [
+        -1220,
+        -980
+      ],
+      "size": [
+        900,
+        220
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "title": "Prompt Guard — Edit only USER PROMPT nodes",
+      "widgets_values": [
+        "Prompt architecture:\n- SYSTEM PROMPT / SYSTEM NEGATIVE = protected guard rails for identity preservation and stability.\n- USER PROMPT / USER NEGATIVE = the part you normally edit.\n- Final prompts are built automatically by concatenation before encoding.\n\nDaily use:\n1) Edit only `USER PROMPT`.\n2) Optionally edit `USER NEGATIVE`.\n3) Do not delete or rewrite `SYSTEM PROMPT` unless you intentionally want to change the global safety/identity behavior."
+      ],
+      "color": "#223",
+      "bgcolor": "#001"
+    },
+    {
+      "id": 101,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1060,
+        -120
+      ],
+      "size": [
+        430,
+        240
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            29
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline",
+        "cnr_id": "comfy-core"
+      },
+      "title": "SYSTEM PROMPT — DO NOT EDIT",
+      "widgets_values": [
+        "Highest priority: preserve the exact facial identity and recognizable appearance of the person in Image 1.\nImage 1 is the identity anchor.\nRestoration/upscaling should recover detail, reduce blur and artifacts, and improve clarity without changing identity.\nKeep the result natural.\n\n"
+      ]
+    },
+    {
+      "id": 102,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1060,
+        150
+      ],
+      "size": [
+        430,
+        220
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            30
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline",
+        "cnr_id": "comfy-core"
+      },
+      "title": "USER PROMPT — edit this",
+      "widgets_values": [
+        "Upscale this image to the chosen output resolution. Preserve the subject, identity, composition, and overall look. Recover missing detail, reduce blur and compression artifacts, improve clarity, and keep the result natural, clean, and realistic."
+      ]
+    },
+    {
+      "id": 103,
+      "type": "StringConcatenate",
+      "pos": [
+        -560,
+        10
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string_a",
+          "type": "STRING",
+          "link": 29
+        },
+        {
+          "name": "string_b",
+          "type": "STRING",
+          "link": 30
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            31
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "StringConcatenate",
+        "cnr_id": "comfy-core"
+      },
+      "title": "FINAL POSITIVE PROMPT",
+      "widgets_values": []
+    },
+    {
+      "id": 104,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1060,
+        470
+      ],
+      "size": [
+        430,
+        200
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            32
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline",
+        "cnr_id": "comfy-core"
+      },
+      "title": "SYSTEM NEGATIVE — DO NOT EDIT",
+      "widgets_values": [
+        "identity drift, changed face identity, altered facial features, wrong face, face mismatch, "
+      ]
+    },
+    {
+      "id": 105,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1060,
+        700
+      ],
+      "size": [
+        430,
+        180
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            33
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline",
+        "cnr_id": "comfy-core"
+      },
+      "title": "USER NEGATIVE — optional",
+      "widgets_values": [
+        "blurry, low quality, noisy, distorted anatomy, oversharpened halos, plastic skin, washed-out colors, duplicated details, extra limbs, text artifacts"
+      ]
+    },
+    {
+      "id": 106,
+      "type": "StringConcatenate",
+      "pos": [
+        -560,
+        600
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string_a",
+          "type": "STRING",
+          "link": 32
+        },
+        {
+          "name": "string_b",
+          "type": "STRING",
+          "link": 33
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            34
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "StringConcatenate",
+        "cnr_id": "comfy-core"
+      },
+      "title": "FINAL NEGATIVE PROMPT",
+      "widgets_values": []
     }
   ],
   "links": [
@@ -1278,6 +1528,54 @@
       92,
       0,
       "IMAGE"
+    ],
+    [
+      29,
+      101,
+      0,
+      103,
+      0,
+      "STRING"
+    ],
+    [
+      30,
+      102,
+      0,
+      103,
+      1,
+      "STRING"
+    ],
+    [
+      31,
+      103,
+      0,
+      30,
+      0,
+      "STRING"
+    ],
+    [
+      32,
+      104,
+      0,
+      106,
+      0,
+      "STRING"
+    ],
+    [
+      33,
+      105,
+      0,
+      106,
+      1,
+      "STRING"
+    ],
+    [
+      34,
+      106,
+      0,
+      31,
+      0,
+      "STRING"
     ]
   ],
   "groups": [],

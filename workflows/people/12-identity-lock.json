@@ -1,6 +1,6 @@
 {
-  "last_node_id": 100,
-  "last_link_id": 30,
+  "last_node_id": 107,
+  "last_link_id": 36,
   "nodes": [
     {
       "id": 100,
@@ -23,7 +23,7 @@
         "cnr_id": "comfy-core"
       },
       "widgets_values": [
-        "Purpose:\n- Keep the same person consistent while making bigger edits.\n\nInputs:\n- Image 1 = current working image.\n- Image 2 = identity reference.\n\nStarter prompt idea:\n- \"Turn this into a polished studio portrait with soft cinematic lighting while preserving the exact identity from Image 2.\"\n\n----------------------------------------------------------------\n    Identity Preservation Rules:\n    - The main person's face identity must stay stable.\n    - Keep face shape, eye spacing, nose shape, mouth shape, skin characteristics, and recognizable appearance.\n    - If multiple reference images are used, they may influence clothing, pose, lighting, background, or materials — not identity, unless explicitly designated as the identity reference.\n    - For edits that do not require face changes, prefer keeping the face untouched or minimally changed.\n    - If identity drift happens in practice, recommended recovery stack:\n      1) make Image 1 the identity anchor,\n      2) keep the prompt explicit about preserving identity,\n      3) use local/cropped editing for non-face changes,\n      4) use ReActor as a final face restore/fallback pass,\n      5) optionally use FaceDetailer with low denoise for face cleanup only.\n    - In this workflow, Image 2 is the identity anchor and must dominate facial identity.\n- Image 1 is the working image to be edited.\n"
+        "Purpose:\n- Keep the same person consistent while making bigger edits.\n\nInputs:\n- Image 1 = current working image.\n- Image 2 = identity reference.\n\nStarter prompt idea:\n- \"Turn this into a polished studio portrait with soft cinematic lighting while preserving the exact identity from Image 2.\"\n\n----------------------------------------------------------------\n    Identity Preservation Rules:\n    - The main person's face identity must stay stable.\n    - Keep face shape, eye spacing, nose shape, mouth shape, skin characteristics, and recognizable appearance.\n    - If multiple reference images are used, they may influence clothing, pose, lighting, background, or materials — not identity, unless explicitly designated as the identity reference.\n    - For edits that do not require face changes, prefer keeping the face untouched or minimally changed.\n    - If identity drift happens in practice, recommended recovery stack:\n      1) make Image 1 the identity anchor,\n      2) keep the prompt explicit about preserving identity,\n      3) use local/cropped editing for non-face changes,\n      4) use ReActor as a final face restore/fallback pass,\n      5) optionally use FaceDetailer with low denoise for face cleanup only.\n    - In this workflow, Image 2 is the identity anchor and must dominate facial identity.\n- Image 1 is the working image to be edited.\n\nPrompt Guard Upgrade:\n- The positive prompt is now split into:\n  1) SYSTEM PROMPT — protected identity-preserving rules\n  2) USER PROMPT — the part you edit\n- The negative prompt is also split into:\n  1) SYSTEM NEGATIVE — protected anti-drift / anti-face-mismatch rules\n  2) USER NEGATIVE — optional extra negatives\n- This prevents accidental deletion of the identity-preservation logic during normal use."
       ],
       "title": "05 — Character / Identity Lock Editor — Guide & Prompt",
       "color": "#222",
@@ -283,6 +283,11 @@
       "mode": 0,
       "inputs": [
         {
+          "name": "prompt",
+          "type": "STRING",
+          "link": 33
+        },
+        {
           "name": "clip",
           "type": "CLIP",
           "link": 3
@@ -326,7 +331,7 @@
         "cnr_id": "comfy-core"
       },
       "widgets_values": [
-        "Highest priority: preserve the exact facial identity and recognizable appearance of the main person. Do not change face shape, eyes, nose, mouth, skin characteristics, hairstyle, or recognizable identity unless the instruction explicitly asks for it. Keep the result natural and coherent. Treat Image 2 as the identity reference / identity anchor. Preserve the exact identity from Image 2 while editing Image 1. Image 1 is the working image. Image 2 is the identity reference and must be treated as the identity anchor. Preserve the face identity, facial structure, hairstyle, and recognizable characteristics from Image 2 while performing the requested edit on Image 1. Avoid changing identity drift, face shape, or overall recognizability."
+        ""
       ],
       "title": "Positive Prompt"
     },
@@ -345,6 +350,11 @@
       "order": 15,
       "mode": 0,
       "inputs": [
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "link": 36
+        },
         {
           "name": "clip",
           "type": "CLIP",
@@ -389,7 +399,7 @@
         "cnr_id": "comfy-core"
       },
       "widgets_values": [
-        "blurry, low quality, deformed anatomy, extra fingers, wrong identity, duplicate limbs, distorted face, oversmoothed skin, text artifacts, unwanted background changes,identity drift, changed face identity, altered facial features, wrong face, face mismatch,"
+        ""
       ],
       "title": "Negative Prompt"
     },
@@ -1086,6 +1096,246 @@
       "widgets_values": [
         "05_identity_lock"
       ]
+    },
+    {
+      "id": 107,
+      "type": "MarkdownNote",
+      "pos": [
+        -1220,
+        -980
+      ],
+      "size": [
+        900,
+        220
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "title": "Prompt Guard — Edit only USER PROMPT nodes",
+      "widgets_values": [
+        "Prompt architecture:\n- SYSTEM PROMPT / SYSTEM NEGATIVE = protected guard rails for identity preservation and stability.\n- USER PROMPT / USER NEGATIVE = the part you normally edit.\n- Final prompts are built automatically by concatenation before encoding.\n\nDaily use:\n1) Edit only `USER PROMPT`.\n2) Optionally edit `USER NEGATIVE`.\n3) Do not delete or rewrite `SYSTEM PROMPT` unless you intentionally want to change the global safety/identity behavior."
+      ],
+      "color": "#223",
+      "bgcolor": "#001"
+    },
+    {
+      "id": 101,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1060,
+        -120
+      ],
+      "size": [
+        430,
+        240
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            31
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline",
+        "cnr_id": "comfy-core"
+      },
+      "title": "SYSTEM PROMPT — DO NOT EDIT",
+      "widgets_values": [
+        "Highest priority: preserve the exact facial identity and recognizable appearance of the main person.\nDo not change face shape, eyes, nose, mouth, skin characteristics, hairstyle, or recognizable identity unless explicitly requested.\nImage 2 is the identity anchor.\nPreserve the exact identity from Image 2 while editing Image 1.\nKeep the result natural and coherent.\n\n"
+      ]
+    },
+    {
+      "id": 102,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1060,
+        150
+      ],
+      "size": [
+        430,
+        220
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            32
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline",
+        "cnr_id": "comfy-core"
+      },
+      "title": "USER PROMPT — edit this",
+      "widgets_values": [
+        "Image 1 is the working image. Image 2 is the identity reference and must be treated as the identity anchor. Preserve the face identity, facial structure, hairstyle, and recognizable characteristics from Image 2 while performing the requested edit on Image 1. Avoid changing identity drift, face shape, or overall recognizability."
+      ]
+    },
+    {
+      "id": 103,
+      "type": "StringConcatenate",
+      "pos": [
+        -560,
+        10
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string_a",
+          "type": "STRING",
+          "link": 31
+        },
+        {
+          "name": "string_b",
+          "type": "STRING",
+          "link": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            33
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "StringConcatenate",
+        "cnr_id": "comfy-core"
+      },
+      "title": "FINAL POSITIVE PROMPT",
+      "widgets_values": []
+    },
+    {
+      "id": 104,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1060,
+        470
+      ],
+      "size": [
+        430,
+        200
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            34
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline",
+        "cnr_id": "comfy-core"
+      },
+      "title": "SYSTEM NEGATIVE — DO NOT EDIT",
+      "widgets_values": [
+        "identity drift, changed face identity, altered facial features, wrong face, face mismatch, "
+      ]
+    },
+    {
+      "id": 105,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1060,
+        700
+      ],
+      "size": [
+        430,
+        180
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            35
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline",
+        "cnr_id": "comfy-core"
+      },
+      "title": "USER NEGATIVE — optional",
+      "widgets_values": [
+        "blurry, low quality, deformed anatomy, extra fingers, wrong identity, duplicate limbs, distorted face, oversmoothed skin, text artifacts, unwanted background changes"
+      ]
+    },
+    {
+      "id": 106,
+      "type": "StringConcatenate",
+      "pos": [
+        -560,
+        600
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string_a",
+          "type": "STRING",
+          "link": 34
+        },
+        {
+          "name": "string_b",
+          "type": "STRING",
+          "link": 35
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            36
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "StringConcatenate",
+        "cnr_id": "comfy-core"
+      },
+      "title": "FINAL NEGATIVE PROMPT",
+      "widgets_values": []
     }
   ],
   "links": [
@@ -1328,6 +1578,54 @@
       92,
       0,
       "IMAGE"
+    ],
+    [
+      31,
+      101,
+      0,
+      103,
+      0,
+      "STRING"
+    ],
+    [
+      32,
+      102,
+      0,
+      103,
+      1,
+      "STRING"
+    ],
+    [
+      33,
+      103,
+      0,
+      30,
+      0,
+      "STRING"
+    ],
+    [
+      34,
+      104,
+      0,
+      106,
+      0,
+      "STRING"
+    ],
+    [
+      35,
+      105,
+      0,
+      106,
+      1,
+      "STRING"
+    ],
+    [
+      36,
+      106,
+      0,
+      31,
+      0,
+      "STRING"
     ]
   ],
   "groups": [],

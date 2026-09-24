@@ -101,3 +101,6 @@ A future advanced version of the repository can add dedicated:
 - Crop-and-stitch identity-safe workflows
 - Face-only restore branches
 - Mask-first inpainting pipelines
+
+
+The workflows now use a split-prompt design with SYSTEM PROMPT / USER PROMPT and SYSTEM NEGATIVE / USER NEGATIVE.
