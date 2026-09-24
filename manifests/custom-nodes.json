@@ -66,6 +66,29 @@
       "required": false,
       "failure_policy": "warn-and-continue",
       "source_url": "https://github.com/scraed/LanPaint"
+    },
+    {
+      "id": "reactor",
+      "name": "ComfyUI ReActor",
+      "repo": "https://github.com/Gourieff/ComfyUI-ReActor.git",
+      "directory": "ComfyUI-ReActor",
+      "install_by_default": true,
+      "install_requirements": true,
+      "run_install_py": false,
+      "required": false,
+      "failure_policy": "warn-and-continue",
+      "source_url": "https://github.com/Gourieff/ComfyUI-ReActor",
+      "used_by": [
+        "10-pose-transfer",
+        "11-clothes-pose-transfer",
+        "12-identity-lock",
+        "20-material-replacement",
+        "21-relighting",
+        "22-restoration-unblur",
+        "23-configurable-upscale",
+        "90-inpainting-starter",
+        "91-layered-editor-starter"
+      ]
     }
   ],
   "source_audit": {

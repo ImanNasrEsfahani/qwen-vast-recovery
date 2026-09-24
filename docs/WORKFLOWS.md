@@ -23,3 +23,17 @@ Each workflow includes:
 - the shared LoRA stack.
 
 Legacy workflows are stored separately and are not installed by default.
+
+
+## Identity behavior across workflows
+
+All active workflows now include:
+- explicit identity-preserving positive prompt language;
+- stronger negative prompts against face mismatch / identity drift;
+- Markdown instructions inside the workflow canvas that clarify which input image is the identity anchor.
+
+Default rule:
+- `Image 1 = identity anchor`
+
+Exception:
+- `12-identity-lock.json` uses `Image 2 = identity anchor`.

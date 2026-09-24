@@ -73,3 +73,14 @@ From the repository:
 ```bash
 python scripts/check_sources.py   --models manifests/models.json   --custom-nodes manifests/custom-nodes.json
 ```
+
+
+## The face changes too much
+
+Recommended fixes:
+
+1. Make sure the intended identity anchor image is in the correct input slot.
+2. Keep the prompt conservative and explicitly say to preserve the person's identity.
+3. If the change is local (for example clothing only), use the inpainting/local-edit approach.
+4. If needed, use ReActor as a final face restore / face re-alignment stage.
+5. If you later build a FaceDetailer pass, keep denoise low.

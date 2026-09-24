@@ -110,3 +110,13 @@ Optional SHA256 verification can be enabled with:
 ```bash
 export QVR_VERIFY_SHA256=1
 ```
+
+
+## Identity preservation
+
+The active workflow library has been updated so identity / face stability is explicit across prompts and internal notes.
+
+See:
+- [Identity preservation](docs/IDENTITY_PRESERVATION.md)
+
+The installer also includes **ComfyUI-ReActor** as an optional custom-node dependency to support post-process face restoration when identity drift happens.

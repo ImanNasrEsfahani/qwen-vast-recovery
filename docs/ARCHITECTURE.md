@@ -55,3 +55,18 @@ To add a workflow:
 3. Run repository validation.
 
 The installer automatically picks up entries with `install_by_default: true`.
+
+
+## Identity Preservation
+
+Identity preservation is handled at three levels:
+
+1. **Workflow design**
+   - input roles are explicit;
+   - identity anchor is documented in the canvas.
+
+2. **Prompt design**
+   - every active workflow includes built-in identity-preserving prompt language.
+
+3. **Optional post-process recovery**
+   - ReActor is installed as an optional dependency for cases where a final face restore pass is needed.
