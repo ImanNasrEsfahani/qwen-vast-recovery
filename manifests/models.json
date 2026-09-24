@@ -11,7 +11,10 @@
       "filename": "split_files/diffusion_models/qwen_image_edit_2511_fp8mixed.safetensors",
       "target": "models/diffusion_models/qwen_image_edit_2511_fp8mixed.safetensors",
       "install_by_default": true,
-      "required": true
+      "required": true,
+      "failure_policy": "required",
+      "source_url": "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/blob/main/split_files/diffusion_models/qwen_image_edit_2511_fp8mixed.safetensors",
+      "expected_sha256": "c9fdc158e46d3b61ef75f21ae866ca2fe808bf4a53643120d1c1e87c19280a4e"
     },
     {
       "id": "qwen-vl-text-encoder",
@@ -22,7 +25,10 @@
       "filename": "split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors",
       "target": "models/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors",
       "install_by_default": true,
-      "required": true
+      "required": true,
+      "failure_policy": "required",
+      "source_url": "https://huggingface.co/Comfy-Org/HunyuanVideo_1.5_repackaged/blob/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "expected_sha256": "cb5636d852a0ea6a9075ab1bef496c0db7aef13c02350571e388aea959c5c0b4"
     },
     {
       "id": "qwen-image-vae",
@@ -33,7 +39,10 @@
       "filename": "split_files/vae/qwen_image_vae.safetensors",
       "target": "models/vae/qwen_image_vae.safetensors",
       "install_by_default": true,
-      "required": true
+      "required": true,
+      "failure_policy": "required",
+      "source_url": "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/blob/main/split_files/vae/qwen_image_vae.safetensors",
+      "expected_sha256": "a70580f0213e67967ee9c95f05bb400e8fb08307e017a924bf3441223e023d1f"
     },
     {
       "id": "lightning-4step",
@@ -44,8 +53,11 @@
       "filename": "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
       "target": "models/loras/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
       "install_by_default": true,
-      "required": true,
-      "workflow_default": "enabled"
+      "required": false,
+      "workflow_default": "enabled",
+      "failure_policy": "warn-and-continue",
+      "source_url": "https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning/blob/main/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "expected_sha256": "22226e8d05d354bb356627d428809f5afd7819399b077238a2b70a82883a904f"
     },
     {
       "id": "ultra-realistic-portrait",
@@ -57,7 +69,9 @@
       "target": "models/loras/URP_20.safetensors",
       "install_by_default": true,
       "required": false,
-      "workflow_default": "bypassed"
+      "workflow_default": "bypassed",
+      "failure_policy": "warn-and-continue",
+      "source_url": "https://huggingface.co/prithivMLmods/Qwen-Image-Edit-2511-Ultra-Realistic-Portrait/blob/main/URP_20.safetensors"
     },
     {
       "id": "hyper-realistic-portrait",
@@ -69,7 +83,10 @@
       "target": "models/loras/HRP_20.safetensors",
       "install_by_default": true,
       "required": false,
-      "workflow_default": "bypassed"
+      "workflow_default": "bypassed",
+      "failure_policy": "warn-and-continue",
+      "source_url": "https://huggingface.co/prithivMLmods/Qwen-Image-Edit-2511-Hyper-Realistic-Portrait/blob/main/HRP_20.safetensors",
+      "expected_sha256": "fb396dfd54465f435486b3116ae47e96e6b110a847217ece4f6e866ae1070312"
     },
     {
       "id": "anything2real",
@@ -81,20 +98,39 @@
       "target": "models/loras/anything2real_2601_A_final_patched.safetensors",
       "install_by_default": true,
       "required": false,
-      "workflow_default": "bypassed"
+      "workflow_default": "bypassed",
+      "failure_policy": "warn-and-continue",
+      "source_url": "https://huggingface.co/lrzjason/Anything2Real/blob/main/anything2real_2601_A_final_patched.safetensors",
+      "expected_sha256": "d4cbbabf5610a8f0ea3f530dc0bc9e8a254be6563c4738795bea45d247903528"
     },
     {
       "id": "sexgod-v2",
       "name": "SexGod Female Nudity v2",
       "kind": "lora",
-      "provider": "civitai",
+      "provider": "huggingface",
       "model_version_id": 2689224,
       "filename": "SEXGOD_FemaleNudity_QwenEdit_2511_v2.safetensors",
       "target": "models/loras/SEXGOD_FemaleNudity_QwenEdit_2511_v2.safetensors",
       "install_by_default": true,
       "required": false,
       "workflow_default": "bypassed",
-      "env_token": "CIVITAI_TOKEN"
+      "env_token": "CIVITAI_TOKEN",
+      "failure_policy": "warn-and-continue",
+      "source_url": "https://huggingface.co/Baraje/SexGod_NSFW_Female_Nudes_QWEN_Image_Edit_2511/blob/main/SEXGOD_FemaleNudity_QwenEdit_2511_v2.safetensors",
+      "repo_id": "Baraje/SexGod_NSFW_Female_Nudes_QWEN_Image_Edit_2511",
+      "fallbacks": [
+        {
+          "provider": "huggingface",
+          "repo_id": "SexGod1979/QwenEdit_2511_FemaleNudity",
+          "filename": "SEXGOD_FemaleNudity_QwenEdit_2511_v2.safetensors"
+        },
+        {
+          "provider": "civitai",
+          "model_version_id": 2689224,
+          "env_token": "CIVITAI_TOKEN"
+        }
+      ],
+      "expected_sha256": "d52a44405bf4c8ab0a84ae2bf24729827ac9f9234fdb5cc6ec922db1af5d2f98"
     },
     {
       "id": "mcnl-nsfw-v1",
@@ -106,7 +142,10 @@
       "target": "models/loras/qwen-image-edit-plus-nsfw-lora.safetensors",
       "install_by_default": true,
       "required": false,
-      "workflow_default": "bypassed"
+      "workflow_default": "bypassed",
+      "failure_policy": "warn-and-continue",
+      "source_url": "https://huggingface.co/ScottzillaSystems/qwen-image-edit-plus-nsfw-lora/blob/main/qwen-image-edit-plus-nsfw-lora.safetensors",
+      "expected_sha256": "16c4841028615bb82c38e79756c0abad42494d85bca0daebc2939384a74d86bb"
     },
     {
       "id": "unblur-upscale-20",
@@ -118,7 +157,14 @@
       "target": "models/loras/Qwen-Image-Edit-Unblur-Upscale_20.safetensors",
       "install_by_default": true,
       "required": false,
-      "workflow_default": "bypassed"
+      "workflow_default": "bypassed",
+      "failure_policy": "warn-and-continue",
+      "source_url": "https://huggingface.co/prithivMLmods/Qwen-Image-Edit-2511-Unblur-Upscale/blob/main/Qwen-Image-Edit-Unblur-Upscale_20.safetensors",
+      "expected_sha256": "1a8f542a733b8b2d942d1535ef817835cf83a7f332eeeabef507676554a2b1a1"
     }
-  ]
+  ],
+  "source_audit": {
+    "last_verified": "2026-09-23",
+    "note": "Primary URLs/repositories were checked against current public Hugging Face/GitHub sources. Optional failures must not stop installation."
+  }
 }

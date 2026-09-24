@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import argparse, json, sys
+import argparse, json
 from pathlib import Path
 
 def load(path):
@@ -14,43 +14,63 @@ def main():
     args = ap.parse_args()
 
     comfy = Path(args.comfy)
-    failures = []
+    required_failures = []
+    warnings = []
 
     models = load(args.models)
+    print("Models / LoRAs:")
     for item in models["items"]:
         if not item.get("install_by_default", False):
             continue
         p = comfy / item["target"]
         good = p.exists() and p.stat().st_size > 1_000_000
-        print(("✓" if good else "✗"), item["id"], p)
+        symbol = "✓" if good else ("✗" if item.get("required", False) else "⚠")
+        print(symbol, item["id"], p)
         if not good:
-            failures.append(f"model:{item['id']}")
+            (required_failures if item.get("required", False) else warnings).append(f"model:{item['id']}")
 
     workflows = load(args.workflows)
     wf_dir = comfy / workflows.get("install_directory", "user/default/workflows/qwen2511")
+    print("\nWorkflows:")
     for item in workflows["items"]:
         if not item.get("install_by_default", False):
             continue
         p = wf_dir / Path(item["path"]).name
         good = p.exists() and p.stat().st_size > 100
-        print(("✓" if good else "✗"), item["id"], p)
+        symbol = "✓" if good else ("✗" if item.get("required", False) else "⚠")
+        print(symbol, item["id"], p)
         if not good:
-            failures.append(f"workflow:{item['id']}")
+            (required_failures if item.get("required", False) else warnings).append(f"workflow:{item['id']}")
 
     nodes = load(args.custom_nodes)
+    print("\nOptional custom nodes:")
     for item in nodes["items"]:
         if not item.get("install_by_default", False):
             continue
         p = comfy / "custom_nodes" / item["directory"]
         good = p.exists()
-        print(("✓" if good else "✗"), item["id"], p)
+        symbol = "✓" if good else ("✗" if item.get("required", False) else "⚠")
+        print(symbol, item["id"], p)
         if not good:
-            failures.append(f"node:{item['id']}")
+            (required_failures if item.get("required", False) else warnings).append(f"node:{item['id']}")
 
-    if failures:
-        print("\nFAILED:", ", ".join(failures))
-        raise SystemExit(1)
-    print("\nAll required/default components are present.")
+    print("\n=== FINAL VERIFICATION ===")
+    if warnings:
+        print("Optional/recommended components missing:")
+        for w in warnings:
+            print("  ⚠", w)
+    if required_failures:
+        print("Required components missing:")
+        for f in required_failures:
+            print("  ✗", f)
+        return 1
+
+    print("Core installation is healthy.")
+    if warnings:
+        print("Installation is usable, with optional warnings shown above.")
+    else:
+        print("All default components are present.")
+    return 0
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

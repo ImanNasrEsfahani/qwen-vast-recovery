@@ -12,6 +12,7 @@ The workflow filenames are intentionally numbered so related workflows remain gr
 | 20 | Material Replacement | Editing | Stable | Material/object replacement |
 | 21 | Relighting | Editing | Stable | Lighting-first edits |
 | 22 | Restoration / Unblur | Editing | Stable | Blur/artifact cleanup |
+| 23 | Configurable Upscale 2K / 4K / 8K | Editing | Stable | Adjustable enlargement to target resolution |
 | 90 | Inpainting Starter | Experimental | Starter | Localized edit scaffold |
 | 91 | Layered Editor Starter | Experimental | Starter | Future layer-aware editing |
 

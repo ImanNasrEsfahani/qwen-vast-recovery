@@ -46,3 +46,30 @@ python scripts/validate_repo.py
 ```
 
 This checks node/link integrity and required guide/prompt nodes.
+
+
+## One LoRA fails to download
+
+This is non-fatal. The installer continues with the remaining models, nodes, and workflows.
+
+The final verification prints the missing LoRA with a warning (`⚠`).
+
+## One optional custom node fails to install
+
+This is also non-fatal. This is especially useful for packages whose Python dependencies can vary by CUDA/Python/platform.
+
+Review the installation log under:
+
+```text
+ComfyUI/.qwen2511-install/
+```
+
+Then install or repair that node independently later.
+
+## Check source availability without a full install
+
+From the repository:
+
+```bash
+python scripts/check_sources.py   --models manifests/models.json   --custom-nodes manifests/custom-nodes.json
+```

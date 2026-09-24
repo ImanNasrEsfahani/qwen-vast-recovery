@@ -77,3 +77,36 @@ Old workflows are kept under `workflows/legacy/` for reference and are not insta
 - [Adding workflows](docs/ADDING_WORKFLOWS.md)
 - [Troubleshooting](docs/TROUBLESHOOTING.md)
 - [Migration from the old layout](docs/MIGRATION.md)
+
+
+## Fault-tolerant installation
+
+The installer distinguishes between **required core components** and **optional/recommended components**.
+
+Required core:
+- Qwen Image Edit 2511 FP8 model
+- Qwen 2.5 VL text encoder
+- Qwen VAE
+
+Optional/recommended:
+- all LoRAs, including Lightning
+- ControlNetAux
+- Impact Pack / Impact Subpack
+- LanPaint
+- experimental starter workflows
+
+If an optional LoRA or custom node fails, installation **continues**. The failure is printed as a warning and the final verification lists the missing optional component.
+
+If a required core model fails, the installer still attempts the remaining stages, then exits with an incomplete-install status at the end.
+
+Logs are written to:
+
+```text
+ComfyUI/.qwen2511-install/
+```
+
+Optional SHA256 verification can be enabled with:
+
+```bash
+export QVR_VERIFY_SHA256=1
+```

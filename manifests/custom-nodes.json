@@ -13,7 +13,10 @@
       "used_by": [
         "10-pose-transfer",
         "11-clothes-pose-transfer"
-      ]
+      ],
+      "required": false,
+      "failure_policy": "warn-and-continue",
+      "source_url": "https://github.com/Fannovel16/comfyui_controlnet_aux"
     },
     {
       "id": "impact-pack",
@@ -22,13 +25,16 @@
       "directory": "ComfyUI-Impact-Pack",
       "install_by_default": true,
       "install_requirements": true,
-      "run_install_py": true,
+      "run_install_py": false,
       "used_by": [
         "10-pose-transfer",
         "11-clothes-pose-transfer",
         "12-identity-lock",
         "22-restoration-unblur"
-      ]
+      ],
+      "required": false,
+      "failure_policy": "warn-and-continue",
+      "source_url": "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
     },
     {
       "id": "impact-subpack",
@@ -41,7 +47,10 @@
       "used_by": [
         "10-pose-transfer",
         "11-clothes-pose-transfer"
-      ]
+      ],
+      "required": false,
+      "failure_policy": "warn-and-continue",
+      "source_url": "https://github.com/ltdrdata/ComfyUI-Impact-Subpack"
     },
     {
       "id": "lanpaint",
@@ -53,7 +62,14 @@
       "run_install_py": false,
       "used_by": [
         "90-inpainting-starter"
-      ]
+      ],
+      "required": false,
+      "failure_policy": "warn-and-continue",
+      "source_url": "https://github.com/scraed/LanPaint"
     }
-  ]
+  ],
+  "source_audit": {
+    "last_verified": "2026-09-23",
+    "note": "Repositories verified as public GitHub projects. They are optional tooling; failures do not abort the main install."
+  }
 }

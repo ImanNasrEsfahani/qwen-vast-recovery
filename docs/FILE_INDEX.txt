@@ -6,6 +6,7 @@ README.md
 bootstrap.sh
 docs/ADDING_WORKFLOWS.md
 docs/ARCHITECTURE.md
+docs/FILE_INDEX.txt
 docs/INSTALLATION.md
 docs/MIGRATION.md
 docs/MODELS.md
@@ -14,6 +15,8 @@ docs/WORKFLOWS.md
 manifests/custom-nodes.json
 manifests/models.json
 manifests/workflows.json
+scripts/__pycache__/install_models.cpython-313.pyc
+scripts/check_sources.py
 scripts/install.sh
 scripts/install_custom_nodes.py
 scripts/install_lora.sh
@@ -24,6 +27,7 @@ scripts/verify_install.py
 workflows/editing/20-material-replacement.json
 workflows/editing/21-relighting.json
 workflows/editing/22-restoration-unblur.json
+workflows/editing/23-configurable-upscale.json
 workflows/experimental/90-inpainting-starter.json
 workflows/experimental/91-layered-editor-starter.json
 workflows/general/01-general-editor.json

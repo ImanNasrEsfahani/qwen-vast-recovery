@@ -18,6 +18,7 @@ Examples:
 ```text
 13-face-expression-transfer.json
 23-background-replacement.json
+24-configurable-upscale.json
 92-layered-composite-experiment.json
 ```
 
