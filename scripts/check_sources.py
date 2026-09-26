@@ -3,19 +3,36 @@ import argparse, json, subprocess
 from pathlib import Path
 from huggingface_hub import HfApi
 
+def load_selection(path):
+    if not path:
+        return {}
+    p = Path(path)
+    if not p.exists():
+        return {}
+    return json.loads(p.read_text(encoding="utf-8"))
+
+def should_check(item, selection):
+    if item.get("role") == "base_model":
+        wanted = selection.get("qwen", {}).get("model_id")
+        if wanted:
+            return item["id"] == wanted
+    return item.get("install_by_default", False)
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--models", required=True)
     ap.add_argument("--custom-nodes", required=True)
+    ap.add_argument("--selection")
     args = ap.parse_args()
 
     warnings = []
     api = HfApi()
+    selection = load_selection(args.selection)
 
     models = json.loads(Path(args.models).read_text(encoding="utf-8"))
     print("Checking model sources...")
     for item in models["items"]:
-        if not item.get("install_by_default", False):
+        if not should_check(item, selection):
             continue
         if item["provider"] == "huggingface":
             try:

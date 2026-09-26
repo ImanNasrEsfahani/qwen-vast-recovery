@@ -20,7 +20,6 @@ if [[ -z "$COMFY" || ! -d "$COMFY" ]]; then
   exit 1
 fi
 
-# Prefer ComfyUI's own venv when available, so custom node requirements land in the right Python.
 if [[ -x "$COMFY/venv/bin/python" ]]; then
   PYTHON="$COMFY/venv/bin/python"
 elif [[ -x "$COMFY/.venv/bin/python" ]]; then
@@ -35,6 +34,7 @@ fi
 
 mkdir -p "$COMFY/.qwen2511-install"
 LOG_FILE="$COMFY/.qwen2511-install/install-$(date +%Y%m%d-%H%M%S).log"
+SELECTION_FILE="$COMFY/.qwen2511-install/hardware-selection.json"
 exec > >(tee -a "$LOG_FILE") 2>&1
 
 echo "ComfyUI: $COMFY"
@@ -49,9 +49,12 @@ fi
 
 fatal=0
 
-log "Preparing downloader dependencies"
-if ! "$PYTHON" -m pip install -q -U huggingface_hub hf_xet; then
-  err "Could not install huggingface_hub/hf_xet. This is required."
+log "Preparing installer dependencies"
+if ! "$PYTHON" -m pip install -q -U \
+    "huggingface_hub>=1.5,<2.0" \
+    hf_xet \
+    "setuptools==81.0.0"; then
+  err "Could not prepare installer dependencies."
   fatal=1
 fi
 
@@ -59,41 +62,59 @@ export HF_HUB_DISABLE_TELEMETRY=1
 export HF_XET_HIGH_PERFORMANCE=1
 
 if [[ "$fatal" -eq 0 ]]; then
+  log "Detecting GPU, VRAM, CUDA and selecting runtime profile"
+  rm -f "$SELECTION_FILE"
+  if ! "$PYTHON" "$ROOT/scripts/detect_hardware.py" --output "$SELECTION_FILE"; then
+    err "Hardware detection failed. Installation cannot safely continue."
+    fatal=1
+  fi
+fi
+
+if [[ "$fatal" -eq 0 ]]; then
   log "Preflight source check (warnings do not stop installation)"
   "$PYTHON" "$ROOT/scripts/check_sources.py" \
     --models "$ROOT/manifests/models.json" \
-    --custom-nodes "$ROOT/manifests/custom-nodes.json" || true
+    --custom-nodes "$ROOT/manifests/custom-nodes.json" \
+    --selection "$SELECTION_FILE" || true
 
-  log "Installing core models and LoRAs"
+  log "Installing hardware-selected core model and LoRAs"
   if ! "$PYTHON" "$ROOT/scripts/install_models.py" \
       --manifest "$ROOT/manifests/models.json" \
-      --comfy "$COMFY"; then
+      --comfy "$COMFY" \
+      --selection "$SELECTION_FILE"; then
     err "One or more REQUIRED core models failed. Continuing other installation stages."
     fatal=1
   fi
 fi
 
-log "Installing required/optional custom nodes"
-if ! "$PYTHON" "$ROOT/scripts/install_custom_nodes.py" \
-    --manifest "$ROOT/manifests/custom-nodes.json" \
-    --comfy "$COMFY"; then
-  warn "Some required custom-node component failed. Continuing."
-  fatal=1
-fi
+if [[ -f "$SELECTION_FILE" ]]; then
+  log "Installing required/optional custom nodes"
+  if ! "$PYTHON" "$ROOT/scripts/install_custom_nodes.py" \
+      --manifest "$ROOT/manifests/custom-nodes.json" \
+      --comfy "$COMFY" \
+      --selection "$SELECTION_FILE"; then
+    warn "Some required custom-node component failed. Continuing."
+    fatal=1
+  fi
 
-log "Verifying required custom nodes can really import/register"
-if ! "$PYTHON" "$ROOT/scripts/verify_custom_nodes_runtime.py" \
-    --manifest "$ROOT/manifests/custom-nodes.json" \
-    --comfy "$COMFY"; then
-  err "Required custom-node runtime verification failed. Workflow installation will continue, but install is incomplete."
-  fatal=1
+  log "Verifying required custom nodes can really import/register"
+  if ! "$PYTHON" "$ROOT/scripts/verify_custom_nodes_runtime.py" \
+      --manifest "$ROOT/manifests/custom-nodes.json" \
+      --comfy "$COMFY" \
+      --selection "$SELECTION_FILE"; then
+    err "Required custom-node runtime verification failed. Workflow installation will continue, but install is incomplete."
+    fatal=1
+  fi
+else
+  warn "Skipping hardware-sensitive custom-node setup because hardware detection did not complete."
 fi
 
 log "Installing workflow library"
 if ! "$PYTHON" "$ROOT/scripts/install_workflows.py" \
     --manifest "$ROOT/manifests/workflows.json" \
     --repo-root "$ROOT" \
-    --comfy "$COMFY"; then
+    --comfy "$COMFY" \
+    --selection "$SELECTION_FILE"; then
   err "One or more required workflows failed. Continuing to verification."
   fatal=1
 fi
@@ -103,14 +124,15 @@ if ! "$PYTHON" "$ROOT/scripts/verify_install.py" \
     --models "$ROOT/manifests/models.json" \
     --workflows "$ROOT/manifests/workflows.json" \
     --custom-nodes "$ROOT/manifests/custom-nodes.json" \
-    --comfy "$COMFY"; then
+    --comfy "$COMFY" \
+    --selection "$SELECTION_FILE"; then
   fatal=1
 fi
 
 echo
 if [[ "$fatal" -eq 0 ]]; then
   ok "Qwen Vast Recovery installation complete."
-  echo "Optional warnings may be present above; they do not invalidate the core install."
+  echo "Hardware selection: $SELECTION_FILE"
   echo "Workflows: $COMFY/user/default/workflows/qwen2511"
   echo "Restart ComfyUI if it is currently running."
   exit 0

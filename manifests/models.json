@@ -14,7 +14,44 @@
       "required": true,
       "failure_policy": "required",
       "source_url": "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/blob/main/split_files/diffusion_models/qwen_image_edit_2511_fp8mixed.safetensors",
-      "expected_sha256": "c9fdc158e46d3b61ef75f21ae866ca2fe808bf4a53643120d1c1e87c19280a4e"
+      "expected_sha256": "c9fdc158e46d3b61ef75f21ae866ca2fe808bf4a53643120d1c1e87c19280a4e",
+      "role": "base_model",
+      "variant": "fp8mixed",
+      "hardware_auto": true
+    },
+    {
+      "id": "qwen-edit-2511-bf16",
+      "name": "Qwen Image Edit 2511 BF16",
+      "kind": "diffusion_model",
+      "provider": "huggingface",
+      "repo_id": "Comfy-Org/Qwen-Image-Edit_ComfyUI",
+      "filename": "split_files/diffusion_models/qwen_image_edit_2511_bf16.safetensors",
+      "target": "models/diffusion_models/qwen_image_edit_2511_bf16.safetensors",
+      "install_by_default": false,
+      "required": true,
+      "role": "base_model",
+      "variant": "bf16",
+      "hardware_auto": true,
+      "failure_policy": "required",
+      "source_url": "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/blob/main/split_files/diffusion_models/qwen_image_edit_2511_bf16.safetensors",
+      "expected_sha256": "ae42d927b5fac4f278b9a894554c727e619727a63622976f2d95625be4bce08c"
+    },
+    {
+      "id": "qwen-edit-2511-int8",
+      "name": "Qwen Image Edit 2511 INT8 ConvRot",
+      "kind": "diffusion_model",
+      "provider": "huggingface",
+      "repo_id": "Comfy-Org/Qwen-Image-Edit_ComfyUI",
+      "filename": "split_files/diffusion_models/qwen_image_edit_2511_int8_convrot.safetensors",
+      "target": "models/diffusion_models/qwen_image_edit_2511_int8_convrot.safetensors",
+      "install_by_default": false,
+      "required": true,
+      "role": "base_model",
+      "variant": "int8_convrot",
+      "hardware_auto": true,
+      "failure_policy": "required",
+      "source_url": "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/blob/main/split_files/diffusion_models/qwen_image_edit_2511_int8_convrot.safetensors",
+      "expected_sha256": "11b5af5ac601821d73930c84846c9a158e67177356daf927ce1c8d10f3963829"
     },
     {
       "id": "qwen-vl-text-encoder",
@@ -164,7 +201,7 @@
     }
   ],
   "source_audit": {
-    "last_verified": "2026-09-23",
-    "note": "Core sources re-audited. Lightning is required because default workflows use it ON. Unblur is required because restoration/upscale workflows use it ON. Optional LoRA failures continue without stopping later install stages."
+    "last_verified": "2026-09-25",
+    "note": "Hardware-aware v8.3: base Qwen 2511 weights are selected at install time (BF16 / FP8 Mixed / INT8 ConvRot). Other model and LoRA source behavior is unchanged."
   }
 }

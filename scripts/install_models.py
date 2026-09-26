@@ -22,7 +22,6 @@ def verify_hash(item, dest: Path):
     expected = item.get("expected_sha256")
     if not expected or not valid_file(dest):
         return True
-    # Hashing 20+ GB files is expensive; opt-in at runtime.
     if os.getenv("QVR_VERIFY_SHA256", "0") != "1":
         return True
     actual = sha256_file(dest)
@@ -82,6 +81,24 @@ def source_from_item(item):
             src[key] = item[key]
     return src
 
+def load_selection(path):
+    if not path:
+        return {}
+    p = Path(path)
+    if not p.exists():
+        raise RuntimeError(f"hardware selection file missing: {p}")
+    return json.loads(p.read_text(encoding="utf-8"))
+
+def selected_base_id(selection):
+    return selection.get("qwen", {}).get("model_id")
+
+def should_install(item, selection):
+    if item.get("role") == "base_model":
+        wanted = selected_base_id(selection)
+        if wanted:
+            return item["id"] == wanted
+    return item.get("install_by_default", False)
+
 def install_one(item, comfy: Path, stage: Path):
     dest = comfy / item["target"]
     if valid_file(dest):
@@ -114,16 +131,24 @@ def install_one(item, comfy: Path, stage: Path):
 
     return False, "; ".join(errors)
 
-def install_items(data, comfy: Path):
+def install_items(data, comfy: Path, selection):
     stage = comfy / ".qwen2511-downloads"
     stage.mkdir(parents=True, exist_ok=True)
 
     required_failures = []
     optional_failures = []
     successes = []
+    selected = selected_base_id(selection)
+
+    if selected:
+        ids = {x["id"] for x in data["items"]}
+        if selected not in ids:
+            print(f"✗ Selected base model id is not in manifest: {selected}")
+            return 1
+        print(f"Hardware-selected base model: {selected}")
 
     for item in data["items"]:
-        if not item.get("install_by_default", False):
+        if not should_install(item, selection):
             continue
         print(f"\n↓ {item['name']} [{item['id']}]")
         try:
@@ -141,6 +166,8 @@ def install_items(data, comfy: Path):
 
     print("\n=== MODEL INSTALL SUMMARY ===")
     print(f"Installed/present: {len(successes)}")
+    if selected:
+        print(f"Selected base model: {selected}")
     if optional_failures:
         print("Optional warnings:")
         for item_id, msg in optional_failures:
@@ -156,9 +183,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--manifest", required=True)
     ap.add_argument("--comfy", required=True)
+    ap.add_argument("--selection")
     args = ap.parse_args()
     data = json.loads(Path(args.manifest).read_text(encoding="utf-8"))
-    raise SystemExit(install_items(data, Path(args.comfy)))
+    selection = load_selection(args.selection)
+    raise SystemExit(install_items(data, Path(args.comfy), selection))
 
 if __name__ == "__main__":
     main()
